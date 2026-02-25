@@ -1,0 +1,323 @@
+.about-page {
+  background-color: #0f172a;
+  color: #f8fafc;
+  min-height: 100vh;
+}
+.about-hero {
+  padding: 8rem 2rem 4rem;
+  text-align: center;
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  position: relative;
+}
+.about-hero::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(56, 189, 248, 0.3),
+    transparent
+  );
+}
+.about-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+.about-title .highlight {
+  background: linear-gradient(135deg, #38bdf8 0%, #2ee0b6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.about-subtitle {
+  font-size: 1.25rem;
+  color: #94a3b8;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.about-section {
+  padding: 6rem 2rem;
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.about-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: white;
+}
+.about-content p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #cbd5e1;
+  margin-bottom: 1.5rem;
+}
+.about-image-card {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.about-image-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(56, 189, 248, 0.1) 0%,
+    transparent 70%
+  );
+  animation: rotate 20s linear infinite;
+}
+.about-icon {
+  font-size: 5rem;
+  color: #ef4444;
+  margin-bottom: 1.5rem;
+  z-index: 1;
+}
+.pulse {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+.about-image-card h3 {
+  font-size: 1.5rem;
+  color: white;
+  z-index: 1;
+}
+.values-section {
+  background: #0b1121;
+}
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+.value-card {
+  background: #1e293b;
+  padding: 2.5rem;
+  border-radius: 16px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+.value-card:hover {
+  transform: translateY(-10px);
+}
+.value-icon-wrapper {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 1.5rem;
+  color: white;
+}
+.value-icon-wrapper.blue {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+.value-icon-wrapper.green {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+.value-icon-wrapper.purple {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+.value-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+.value-card p {
+  color: #94a3b8;
+  line-height: 1.6;
+}
+.story-text {
+  max-width: 800px;
+  margin: 2rem auto;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #cbd5e1;
+}
+.team-badge {
+  margin-top: 2rem;
+}
+.team-badge span {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.1);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.1);
+  }
+  60% {
+    transform: scale(1);
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 968px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .about-title {
+    font-size: 2.5rem;
+  }
+}
+.team-section {
+  background: #0b1121;
+  text-align: center;
+  padding-top: 4rem;
+}
+.team-header {
+  margin-bottom: 4rem;
+}
+.section-pre-title {
+  display: block;
+  font-size: 1rem;
+  color: #ef4444;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+.team-college {
+  color: #38bdf8;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.team-tagline {
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #cbd5e1;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.team-card {
+  background: #1e293b;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+  width: 100%;
+}
+.team-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  border-color: rgba(46, 224, 182, 0.4);
+}
+.member-image {
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+  position: relative;
+  background: #0f172a;
+}
+.member-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #0b1121;
+  transition: transform 0.5s ease;
+}
+.team-card:hover .member-image img {
+  transform: scale(1.05);
+}
+.member-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(to top, #1e293b 10%, transparent 100%);
+  opacity: 0.9;
+}
+.member-info {
+  padding: 1.5rem;
+  position: relative;
+  z-index: 2;
+  background: #1e293b;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.member-info h3 {
+  margin: 0 0 0.5rem 0;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+.member-role {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: 0.5px;
+  background: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+  padding: 0.3rem 0.8rem;
+  border-radius: 50px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  text-transform: uppercase;
+}
+.member-info p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}

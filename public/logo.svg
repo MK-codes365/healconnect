@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 260" width="460" height="460">
+  <defs>
+    <!-- Ring gradient -->
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2FB3FF"/>
+      <stop offset="100%" stop-color="#2EE0B6"/>
+    </linearGradient>
+
+    <!-- Node gradient -->
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4CB6FF"/>
+      <stop offset="100%" stop-color="#2EE0B6"/>
+    </linearGradient>
+
+    <!-- Text gradient (dark blue) -->
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0A3D78"/>
+      <stop offset="100%" stop-color="#0B2A55"/>
+    </linearGradient>
+
+    <filter id="fShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+      <feOffset in="blur" dx="0" dy="1" result="off"/>
+      <feMerge>
+        <feMergeNode in="off"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#0F0F11"/>
+
+  <!-- Centered Logo -->
+  <g transform="translate(130,115)">
+    <!-- Outer Ring -->
+    <circle r="78" fill="none" stroke="url(#g1)" stroke-width="12" stroke-linecap="round"/>
+
+    <!-- Nodes -->
+    <g transform="translate(0,-78)">
+      <circle r="10" fill="url(#g2)" filter="url(#fShadow)"/>
+    </g>
+    <g transform="translate(78,0)">
+      <circle r="10" fill="url(#g2)" filter="url(#fShadow)"/>
+    </g>
+    <g transform="translate(0,78)">
+      <circle r="10" fill="url(#g2)" filter="url(#fShadow)"/>
+    </g>
+    <g transform="translate(-78,0)">
+      <circle r="10" fill="url(#g2)" filter="url(#fShadow)"/>
+    </g>
+
+    <!-- Medical Plus -->
+    <rect x="-14" y="-44" width="28" height="88" rx="6" fill="url(#g1)"/>
+    <rect x="-44" y="-14" width="88" height="28" rx="6" fill="url(#g1)"/>
+  </g>
+
+  <!-- Brand Name Text -->
+  <text x="130" y="235"
+        font-family="Segoe UI, Poppins, Roboto, sans-serif"
+        font-size="28"
+        font-weight="600"
+        text-anchor="middle"
+        fill="url(#textGrad)">
+    HealConnect
+  </text>
+</svg>
