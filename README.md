@@ -8,7 +8,7 @@
 [![Vite](https://img.shields.io/badge/Vite-7.2.4-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
-[🚀 Live Demo](#) • [📖 Documentation](#features) • [🤝 Contributing](#contributing) • [📧 Contact](#contact)
+[🚀 Live Demo](https://healconnect-iota.vercel.app/) • [📖 Documentation](#features) • [🤝 Contributing](#contributing) • [📧 Contact](#contact)
 
 </div>
 
@@ -464,22 +464,26 @@ heal-connect/
 
 ### Landing Page
 <div align="center">
-<img src="docs/screenshots/landing.png" alt="Landing Page" width="800"/>
+<img width="1901" height="870" alt="Screenshot 2026-02-25 191013" src="https://github.com/user-attachments/assets/4dbb92ab-ca3e-44ac-a293-7333107115c6" />
+
 </div>
 
 ### Patient Dashboard
 <div align="center">
-<img src="docs/screenshots/patient-dashboard.png" alt="Patient Dashboard" width="800"/>
+<img width="1891" height="565" alt="Screenshot 2026-02-25 193208" src="https://github.com/user-attachments/assets/4ed27890-a546-46ff-8fce-a2cb18392df3" />
+
 </div>
 
 ### AI Chat Assistant
 <div align="center">
-<img src="docs/screenshots/ai-chat.png" alt="AI Chat" width="800"/>
+<img width="1887" height="737" alt="Screenshot 2026-02-25 193246" src="https://github.com/user-attachments/assets/44af137a-c97f-4e27-b703-a70f075a054a" />
+
 </div>
 
 ### Doctor Consultation
 <div align="center">
-<img src="docs/screenshots/teleconsultation.png" alt="Teleconsultation" width="800"/>
+<img width="1404" height="626" alt="Screenshot 2026-02-25 193325" src="https://github.com/user-attachments/assets/3f5834d2-f160-434e-9856-a3c6bfab0654" />
+
 </div>
 
 ---
@@ -605,7 +609,7 @@ copies or substantial portions of the Software.
 
 ### ⭐ Star us on GitHub — it motivates us a lot!
 
-Made with ❤️ by the Heal Connect Team
+Made with ❤️ by the CODEX5 Team
 
 [⬆ Back to Top](#-heal-connect)
 
