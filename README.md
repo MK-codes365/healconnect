@@ -1,6 +1,7 @@
 <div align="center">
 
-<img src="https://img.icons8.com/color/256/000000/medical-plus.png" alt="Heal Connect Logo" width="120" height="120" style="border-radius: 50%; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: 3px solid #667eea;">
+<img src="<img width="150" height="150" alt="logo" src="https://github.com/user-attachments/assets/6aec885e-d1f7-4987-803c-c93a4c92666b" />
+ 
 
 # 🏥 Heal Connect
 
