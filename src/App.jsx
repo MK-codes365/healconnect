@@ -9,6 +9,8 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import ScrollToTop from './components/ScrollToTop';
 import { AuthProvider } from './context/AuthContext';
+import { LanguageProvider } from './context/LanguageContext';
+import { NotificationProvider } from './context/NotificationContext';
 import Login from './pages/Login';
 import PatientDashboard from './pages/dashboards/PatientDashboard';
 import DoctorDashboard from './pages/dashboards/DoctorDashboard';
@@ -45,45 +47,49 @@ function App() {
 
   return (
     <AuthProvider>
-      <Router>
-        <ScrollToTop />
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard/patient" element={<PatientDashboard />} />
-          <Route path="/dashboard/patient/ai-chat" element={<AIChat />} />
-          <Route path="/dashboard/patient/doctors" element={<DoctorDirectory />} />
-          <Route path="/dashboard/patient/book" element={<BookConsultation />} />
-          <Route path="/dashboard/patient/visits" element={<MyVisits />} />
-          <Route path="/dashboard/patient/messages" element={<Messaging />} />
-          <Route path="/dashboard/patient/prescriptions" element={<Prescriptions />} />
-          <Route path="/dashboard/worker" element={<HealthWorkerDashboard />} />
-          <Route path="/dashboard/worker/register-patient" element={<PatientRegistration />} />
-          <Route path="/dashboard/worker/submit-case" element={<VitalsUpload />} />
-          <Route path="/dashboard/worker/my-cases" element={<MyCases />} />
-          <Route path="/dashboard/worker/messages" element={<WorkerMessaging />} />
-          <Route path="/dashboard/doctor" element={<DoctorDashboard />} />
-          <Route path="/dashboard/doctor/profile" element={<DoctorProfile />} />
-          <Route path="/dashboard/doctor/appointments" element={<Appointments />} />
-          <Route path="/dashboard/doctor/case/:id" element={<CaseDetail />} />
-          <Route path="/dashboard/doctor/consult/:id" element={<Teleconsultation />} />
-          <Route path="/dashboard/doctor/messages" element={<DoctorMessaging />} />
-          <Route path="/dashboard/doctor/prescription/:patientId" element={<PrescriptionCreator />} />
-          <Route path="/dashboard/admin" element={<AdminDashboard />} />
-          <Route path="/dashboard/admin/users" element={<UserManagement />} />
-          <Route path="/dashboard/admin/analytics" element={<Analytics />} />
-          <Route path="/dashboard/admin/verification" element={<DoctorVerification />} />
-          <Route path="/dashboard/admin/appointments" element={<AppointmentOversight />} />
-          <Route path="/dashboard/admin/messaging" element={<MessagingMonitor />} />
-          <Route path="/dashboard/admin/settings" element={<PlatformSettings />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-        </Routes>
-        <Footer />
-      </Router>
+      <LanguageProvider>
+        <NotificationProvider>
+          <Router>
+            <ScrollToTop />
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/dashboard/patient" element={<PatientDashboard />} />
+              <Route path="/dashboard/patient/ai-chat" element={<AIChat />} />
+              <Route path="/dashboard/patient/doctors" element={<DoctorDirectory />} />
+              <Route path="/dashboard/patient/book" element={<BookConsultation />} />
+              <Route path="/dashboard/patient/visits" element={<MyVisits />} />
+              <Route path="/dashboard/patient/messages" element={<Messaging />} />
+              <Route path="/dashboard/patient/prescriptions" element={<Prescriptions />} />
+              <Route path="/dashboard/worker" element={<HealthWorkerDashboard />} />
+              <Route path="/dashboard/worker/register-patient" element={<PatientRegistration />} />
+              <Route path="/dashboard/worker/submit-case" element={<VitalsUpload />} />
+              <Route path="/dashboard/worker/my-cases" element={<MyCases />} />
+              <Route path="/dashboard/worker/messages" element={<WorkerMessaging />} />
+              <Route path="/dashboard/doctor" element={<DoctorDashboard />} />
+              <Route path="/dashboard/doctor/profile" element={<DoctorProfile />} />
+              <Route path="/dashboard/doctor/appointments" element={<Appointments />} />
+              <Route path="/dashboard/doctor/case/:id" element={<CaseDetail />} />
+              <Route path="/dashboard/doctor/consult/:id" element={<Teleconsultation />} />
+              <Route path="/dashboard/doctor/messages" element={<DoctorMessaging />} />
+              <Route path="/dashboard/doctor/prescription/:patientId" element={<PrescriptionCreator />} />
+              <Route path="/dashboard/admin" element={<AdminDashboard />} />
+              <Route path="/dashboard/admin/users" element={<UserManagement />} />
+              <Route path="/dashboard/admin/analytics" element={<Analytics />} />
+              <Route path="/dashboard/admin/verification" element={<DoctorVerification />} />
+              <Route path="/dashboard/admin/appointments" element={<AppointmentOversight />} />
+              <Route path="/dashboard/admin/messaging" element={<MessagingMonitor />} />
+              <Route path="/dashboard/admin/settings" element={<PlatformSettings />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+            </Routes>
+            <Footer />
+          </Router>
+        </NotificationProvider>
+      </LanguageProvider>
     </AuthProvider>
   );
 }

@@ -1,97 +1,41 @@
-.language-switcher-container {
+.language-switcher {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-left: 1rem;
-    min-width: 150px;
-    max-width: 200px;
-    overflow: hidden;
-    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 4px 12px;
+    gap: 8px;
+    transition: all 0.3s ease;
 }
 
-/* Customize Google Translate Widget */
-.goog-te-gadget {
-    font-family: inherit !important;
-    font-size: 0 !important; /* Hide "Powered by Google" text */
-    color: transparent !important;
+.language-switcher:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary);
 }
 
-.goog-te-gadget .goog-te-combo {
-    margin: 0 !important;
-    padding: 8px 16px !important;
-    border-radius: 20px !important;
-    border: 1px solid rgba(56, 189, 248, 0.3) !important;
-    background: rgba(15, 23, 42, 0.8) !important;
-    color: #f8fafc !important;
-    font-size: 14px !important;
-    font-family: 'Inter', sans-serif !important;
-    cursor: pointer !important;
-    outline: none !important;
-    transition: all 0.3s ease !important;
-    appearance: none; /* Remove default arrow in some browsers */
+.lang-btn {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 2px 4px;
+    transition: all 0.2s;
 }
 
-/* Add custom arrow indicator */
-.goog-te-gadget {
-    position: relative;
+.lang-btn.active {
+    color: var(--primary);
 }
 
-.goog-te-gadget .goog-te-combo:hover {
-    border-color: #38bdf8 !important;
-    background: rgba(30, 41, 59, 1) !important;
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+.divider {
+    width: 1px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.2);
 }
 
-/* Aggressively hide all Google branding elements */
-.goog-te-gadget span {
-    display: none !important;
-}
-
-.goog-logo-link {
-    display: none !important;
-}
-
-.goog-te-gadget .goog-te-combo option {
-    background: #0f172a;
-    color: white;
-}
-
-/* Hide the top banner frame that Google sometimes injects */
-/* Hide the top banner frame that Google sometimes injects */
-.goog-te-banner-frame,
-.skiptranslate.goog-te-banner-frame {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    width: 0 !important;
-    z-index: -1000 !important;
-}
-
-body {
-    top: 0px !important;
-    position: static !important;
-}
-
-html {
-    margin-top: 0px !important;
-    height: 100% !important;
-}
-
-/* Hide specific Google iframes that might be the banner */
-iframe[class*="goog-te-banner"],
-iframe[id^=":"] {
-    display: none !important;
-}
-
-/* Mobile responsive */
-@media screen and (max-width: 960px) {
-    .language-switcher-container {
-        margin: 1rem 0;
-        width: 100%;
-    }
-    
-    .goog-te-gadget .goog-te-combo {
-        width: 100% !important;
-        text-align: center !important;
-    }
+.globe-icon {
+    color: #64748b;
+    font-size: 0.9rem;
 }
