@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 import LandingPage from './pages/LandingPage';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -87,6 +88,7 @@ function App() {
               <Route path="/terms" element={<Terms />} />
             </Routes>
             <Footer />
+            <VercelAnalytics />
           </Router>
         </NotificationProvider>
       </LanguageProvider>
