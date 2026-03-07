@@ -1,1 +1,170 @@
-import React, { useState } from 'react';import { useNavigate, useParams } from 'react-router-dom';import { FaArrowLeft, FaVideo, FaNotesMedical } from 'react-icons/fa';import { mockCases, workerCases } from '../../../data/mockData';import './CaseDetail.css';const CaseDetail = () => {    const navigate = useNavigate();    const { id } = useParams();    const [notes, setNotes] = useState('');    const allCases = [...mockCases, ...workerCases];    const caseData = allCases.find(c => c.id === id);    if (!caseData) {        return <div>Case not found</div>;    }    const handleStartConsultation = () => {        navigate(`/dashboard/doctor/consult/${id}`);    };    const handleCreatePrescription = () => {        navigate(`/dashboard/doctor/prescription/${caseData.patientName}`);    };    return (        <div className="case-detail-container">            <div className="case-detail-header">                <button onClick={() => navigate('/dashboard/doctor')} className="back-btn">                    <FaArrowLeft /> Back                </button>                <h2>Case Details</h2>            </div>            <div className="case-detail-content">                <div className="patient-info-card">                    <h3>Patient Information</h3>                    <div className="info-grid">                        <div className="info-item">                            <label>Name</label>                            <p>{caseData.patientName}</p>                        </div>                        <div className="info-item">                            <label>Age</label>                            <p>{caseData.age} years</p>                        </div>                        <div className="info-item">                            <label>Location</label>                            <p>{caseData.village || 'Unknown'}</p>                        </div>                        <div className="info-item">                            <label>Submitted By</label>                            <p>{caseData.submittedBy}</p>                        </div>                    </div>                </div>                <div className="symptoms-card">                    <h3>Symptoms & Triage</h3>                    <div className="urgency-badge" style={{                        background: caseData.urgency === 'HIGH' ? '#ef4444' :                                    caseData.urgency === 'MEDIUM' ? '#f59e0b' : '#14b8a6'                    }}>                        {caseData.urgency} PRIORITY                    </div>                    <div className="symptoms-list">                        {caseData.symptoms.map((symptom, index) => (                            <span key={index} className="symptom-tag">{symptom}</span>                        ))}                    </div>                    <p className="specialty-info">Recommended Specialty: {caseData.specialty}</p>                </div>                <div className="vitals-card">                    <h3>Vitals (Mock Data)</h3>                    <div className="vitals-grid">                        <div className="vital-item">                            <label>Blood Pressure</label>                            <p>120/80 mmHg</p>                        </div>                        <div className="vital-item">                            <label>Heart Rate</label>                            <p>72 bpm</p>                        </div>                        <div className="vital-item">                            <label>Temperature</label>                            <p>98.6°F</p>                        </div>                        <div className="vital-item">                            <label>Oxygen Saturation</label>                            <p>98%</p>                        </div>                    </div>                </div>                <div className="notes-card">                    <h3><FaNotesMedical /> Add Notes</h3>                    <textarea                        rows="6"                        placeholder="Enter your clinical notes here..."                        value={notes}                        onChange={(e) => setNotes(e.target.value)}                    />                </div>                <div className="action-buttons">                    <button className="consult-btn" onClick={handleStartConsultation}>                        <FaVideo /> Start Teleconsultation                    </button>                    <button className="prescription-btn" onClick={handleCreatePrescription}>                        Create Prescription                    </button>                </div>            </div>        </div>    );};export default CaseDetail;
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FaArrowLeft, FaVideo, FaNotesMedical, FaRobot, FaUser, FaHistory } from 'react-icons/fa';
+import ReactMarkdown from "react-markdown";
+import { api } from '../../../api';
+import './CaseDetail.css';
+
+const CaseDetail = () => {
+    const navigate = useNavigate();
+    const { id: patientId } = useParams(); // patientId is passed as :id
+    const [notes, setNotes] = useState('');
+    const [caseData, setCaseData] = useState(null);
+    const [aiSession, setAiSession] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // 1. Fetch cases to find this specific one
+                const allCases = await api.getCases();
+                const foundCase = allCases.find(c => c.patientId === patientId);
+                setCaseData(foundCase);
+
+                // 2. Fetch AI Sessions for this patient
+                const sessions = await api.getChatSessions(patientId);
+                // If the case points to a specific session, find it, otherwise take newest
+                const relevantSession = foundCase?.sessionId 
+                    ? sessions.find(s => s.sessionId === foundCase.sessionId)
+                    : sessions[0];
+                setAiSession(relevantSession);
+
+            } catch (error) {
+                console.error("Error fetching case details:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, [patientId]);
+
+    if (loading) return <div className="loading-state">Loading clinical data...</div>;
+    if (!caseData) return <div className="error-state">Case not found in cloud registry.</div>;
+
+    const handleStartConsultation = () => {
+        navigate(`/dashboard/doctor/consult/${patientId}`);
+    };
+
+    const handleCreatePrescription = () => {
+        navigate(`/dashboard/doctor/prescription/${patientId}`);
+    };
+
+    return (
+        <div className="case-detail-page animate-fade-in">
+            <div className="case-detail-header glass-nav">
+                <button onClick={() => navigate('/dashboard/doctor')} className="back-btn">
+                    <FaArrowLeft /> Dashboard
+                </button>
+                <div className="header-titles">
+                    <h2>Clinical Case Review</h2>
+                    <span className="case-id">Registry ID: {caseData.sk}</span>
+                </div>
+            </div>
+
+            <div className="case-detail-layout">
+                <div className="detail-primary">
+                    <div className="clinical-grid">
+                        <div className="patient-master-card glass-card">
+                            <div className="card-header">
+                                <FaUser />
+                                <h3>Patient Master File</h3>
+                            </div>
+                            <div className="info-grid">
+                                <div className="info-node">
+                                    <label>Full Name</label>
+                                    <p>{caseData.patientName}</p>
+                                </div>
+                                <div className="info-node">
+                                    <label>Clinical Age</label>
+                                    <p>{caseData.age || 'N/A'} Yrs</p>
+                                </div>
+                                <div className="info-node">
+                                    <label>Origin Village</label>
+                                    <p>{caseData.village || 'Remote'}</p>
+                                </div>
+                                <div className="info-node">
+                                    <label>Registry Entry</label>
+                                    <p>{new Date(caseData.submittedAt).toLocaleDateString()}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={`ai-assessment-card glass-card urgency-${caseData.urgency?.toLowerCase()}`}>
+                            <div className="card-header">
+                                <FaRobot />
+                                <h3>AI Triage Assessment</h3>
+                                <div className="urgency-glow"></div>
+                            </div>
+                            <div className="assessment-body">
+                                <div className="urgency-status">
+                                    <span className="label">Urgency Level:</span>
+                                    <div className="badge">{caseData.urgency}</div>
+                                </div>
+                                <div className="symptoms-section">
+                                    <span className="label">Captured Symptoms:</span>
+                                    <div className="tags">
+                                        {Array.isArray(caseData.symptoms) ? caseData.symptoms.map((s, i) => (
+                                            <span key={i} className="tag">{s}</span>
+                                        )) : <span className="tag">{caseData.symptoms}</span>}
+                                    </div>
+                                </div>
+                                <div className="rec-section">
+                                    <span className="label">AI Recommendation:</span>
+                                    <p>{caseData.recommendation || 'Consultation recommended based on symptoms.'}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="transcript-section glass-card">
+                        <div className="section-header">
+                            <FaHistory />
+                            <h3>AI Consultation Transcript</h3>
+                        </div>
+                        <div className="transcript-viewport">
+                            {aiSession ? (
+                                aiSession.messages.map((msg, idx) => (
+                                    <div key={idx} className={`transcript-bubble ${msg.sender}`}>
+                                        <div className="bubble-header">
+                                            {msg.sender === 'ai' ? 'HealAssist AI' : 'Patient'}
+                                        </div>
+                                        <div className="bubble-content">
+                                            {msg.sender === 'ai' ? <ReactMarkdown>{msg.text}</ReactMarkdown> : msg.text}
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="no-transcript">No cloud transcript found for this case.</div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="detail-sidebar">
+                    <div className="notes-console glass-card">
+                        <div className="console-header">
+                            <FaNotesMedical />
+                            <h3>Doctor's Console</h3>
+                        </div>
+                        <textarea
+                            className="clinical-textarea"
+                            placeholder="Type clinical observations, differential diagnosis, and treatment plans here..."
+                            value={notes}
+                            onChange={(e) => setNotes(e.target.value)}
+                        />
+                        <div className="console-actions">
+                            <button className="tele-btn" onClick={handleStartConsultation}>
+                                <FaVideo /> Teleconsultation
+                            </button>
+                            <button className="presc-btn btn-primary" onClick={handleCreatePrescription}>
+                                Finalize Prescription
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default CaseDetail;

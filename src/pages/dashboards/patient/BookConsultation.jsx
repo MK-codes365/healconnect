@@ -1,1 +1,191 @@
-import React, { useState } from 'react';import { useNavigate, useLocation } from 'react-router-dom';import { FaArrowLeft, FaVideo, FaClock } from 'react-icons/fa';import './BookConsultation.css';const BookConsultation = () => {    const navigate = useNavigate();    const location = useLocation();    const doctor = location.state?.doctor;    const scheduled = location.state?.scheduled;    const [bookingType, setBookingType] = useState(scheduled ? 'schedule' : 'instant');    const [selectedDate, setSelectedDate] = useState('');    const [selectedTime, setSelectedTime] = useState('');    const [inQueue, setInQueue] = useState(false);    const handleBooking = () => {        if (bookingType === 'instant') {            if (doctor?.availability === 'Busy') {                setInQueue(true);            } else {                alert('Starting video consultation...');            }        } else {            alert(`Appointment scheduled for ${selectedDate} at ${selectedTime}`);            navigate('/dashboard/patient/visits');        }    };    return (        <div className="book-consultation">            <div className="booking-header">                <button onClick={() => navigate(-1)} className="back-btn">                    <FaArrowLeft /> Back                </button>                <h2>Book Consultation</h2>            </div>            {doctor && (                <div className="selected-doctor">                    <div className="doctor-avatar">                        {doctor.name.split(' ').map(n => n[0]).join('')}                    </div>                    <div>                        <h3>{doctor.name}</h3>                        <p>{doctor.specialty}</p>                        <p className="fees">₹{doctor.fees}</p>                    </div>                </div>            )}            <div className="booking-options">                <button                     className={`option-btn ${bookingType === 'instant' ? 'active' : ''}`}                    onClick={() => setBookingType('instant')}                >                    <FaVideo /> Consult Now                </button>                <button                     className={`option-btn ${bookingType === 'schedule' ? 'active' : ''}`}                    onClick={() => setBookingType('schedule')}                >                    <FaClock /> Schedule Appointment                </button>            </div>            {bookingType === 'schedule' && (                <div className="schedule-form">                    <div className="form-group">                        <label>Select Date</label>                        <input                             type="date"                             value={selectedDate}                            onChange={(e) => setSelectedDate(e.target.value)}                            min={new Date().toISOString().split('T')[0]}                        />                    </div>                    <div className="form-group">                        <label>Select Time</label>                        <select value={selectedTime} onChange={(e) => setSelectedTime(e.target.value)}>                            <option value="">Choose a time slot</option>                            <option value="09:00">09:00 AM</option>                            <option value="10:00">10:00 AM</option>                            <option value="11:00">11:00 AM</option>                            <option value="14:00">02:00 PM</option>                            <option value="15:00">03:00 PM</option>                            <option value="16:00">04:00 PM</option>                        </select>                    </div>                </div>            )}            {inQueue && (                <div className="queue-notification">                    <h3>Doctor is currently busy</h3>                    <p>You've been added to the waiting queue</p>                    <p className="queue-position">Position: #3</p>                    <p className="estimated-time">Estimated wait: 15-20 minutes</p>                    <p>We'll notify you when it's your turn</p>                </div>            )}            <button                 className="confirm-btn"                onClick={handleBooking}                disabled={bookingType === 'schedule' && (!selectedDate || !selectedTime)}            >                {bookingType === 'instant' ? 'Start Consultation' : 'Confirm Appointment'}            </button>        </div>    );};export default BookConsultation;
+import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { FaArrowLeft, FaVideo, FaClock, FaCalendarDay, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import { useAuth } from '../../../context/AuthContext';
+import { api } from '../../../api';
+import './BookConsultation.css';
+
+const BookConsultation = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { user } = useAuth();
+    
+    // Triage data passed from AIChat
+    const triageData = location.state?.triageData;
+    const doctor = location.state?.doctor;
+
+    const [bookingType, setBookingType] = useState('instant');
+    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+    const [selectedTime, setSelectedTime] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(null);
+
+    const handleBooking = async () => {
+        if (!user?.id && !user?.email) {
+            setError("You must be logged in to book an appointment.");
+            return;
+        }
+
+        if (bookingType === 'schedule' && (!selectedDate || !selectedTime)) {
+            setError("Please select both date and time.");
+            return;
+        }
+
+        setLoading(true);
+        setError(null);
+
+        try {
+            const patientId = user?.id || user?.email;
+            
+            // Create a new CASE record in DynamoDB for this booking
+            const bookingRecord = {
+                id: `BOOK-${Date.now()}`,
+                patientId: patientId,
+                patientName: user?.name || user?.email?.split('@')[0] || "Patient",
+                specialty: doctor?.specialty || triageData?.specialty || "General Medicine",
+                urgency: triageData?.urgency || "NORMAL",
+                status: 'scheduled',
+                type: 'BOOKING',
+                symptoms: triageData ? [triageData.specialty] : [],
+                recommendation: triageData?.recommendation || "Consultation requested",
+                submittedAt: Date.now(),
+                appointmentDate: bookingType === 'schedule' ? selectedDate : 'Immediate',
+                appointmentTime: bookingType === 'schedule' ? selectedTime : 'Now'
+            };
+
+            // Use the cases API to save this to DynamoDB
+            await api.createCase(bookingRecord);
+            
+            setSuccess(true);
+            setTimeout(() => {
+                navigate('/dashboard/patient/visits');
+            }, 2500);
+        } catch (err) {
+            console.error("Booking error:", err);
+            setError("Failed to schedule appointment. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (success) {
+        return (
+            <div className="book-consultation-container animate-fade-in">
+                <div className="booking-success-container">
+                    <div className="success-card glass-card">
+                        <FaCheckCircle className="success-icon" />
+                        <h2>Booking Confirmed!</h2>
+                        <p>Your consultation has been successfully scheduled. You'll find it in your "My Visits" history.</p>
+                        <p className="redirect-text">Redirecting to history...</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="book-consultation-container animate-fade-in">
+            <div className="booking-header">
+                <button onClick={() => navigate(-1)} className="visits-back-btn">
+                    <FaArrowLeft /> Back
+                </button>
+                <div className="header-info">
+                    <h2>Book Your Consultation</h2>
+                    <p className="subtitle">Secure, high-quality healthcare at your fingertips.</p>
+                </div>
+            </div>
+
+            <div className="booking-layout">
+                <div className="booking-main glass-card">
+                    {triageData && (
+                        <div className="triage-status-bar">
+                            <span className="label">Recommended Specialty:</span>
+                            <span className="value">{triageData.specialty}</span>
+                            <span className={`urgency-tag ${triageData.urgency}`}>{triageData.urgency}</span>
+                        </div>
+                    )}
+
+                    <div className="booking-options">
+                        <div 
+                            className={`option-card ${bookingType === 'instant' ? 'active' : ''}`}
+                            onClick={() => setBookingType('instant')}
+                        >
+                            <div className="option-icon"><FaVideo /></div>
+                            <div className="option-text">
+                                <h3>Consult Now</h3>
+                                <p>Connect with a specialist immediately</p>
+                            </div>
+                        </div>
+
+                        <div 
+                            className={`option-card ${bookingType === 'schedule' ? 'active' : ''}`}
+                            onClick={() => setBookingType('schedule')}
+                        >
+                            <div className="option-icon"><FaClock /></div>
+                            <div className="option-text">
+                                <h3>Schedule</h3>
+                                <p>Pick a time that works for you</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {bookingType === 'schedule' && (
+                        <div className="schedule-form animate-fade-in">
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label><FaCalendarDay /> Select Date</label>
+                                    <input 
+                                        type="date" 
+                                        value={selectedDate}
+                                        onChange={(e) => setSelectedDate(e.target.value)}
+                                        min={new Date().toISOString().split('T')[0]}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label><FaClock /> Select Time Slot</label>
+                                    <select value={selectedTime} onChange={(e) => setSelectedTime(e.target.value)}>
+                                        <option value="">Choose a slot</option>
+                                        <option value="09:00 AM">09:00 AM</option>
+                                        <option value="10:30 AM">10:30 AM</option>
+                                        <option value="01:00 PM">01:00 PM</option>
+                                        <option value="03:30 PM">03:30 PM</option>
+                                        <option value="05:00 PM">05:00 PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {error && (
+                        <div className="booking-error">
+                            <FaExclamationCircle /> {error}
+                        </div>
+                    )}
+
+                    <button 
+                        className="confirm-booking-btn"
+                        onClick={handleBooking}
+                        disabled={loading}
+                    >
+                        {loading ? 'Processing...' : (bookingType === 'instant' ? 'Start Consultation' : 'Confirm Appointment')}
+                    </button>
+                </div>
+
+                <div className="booking-aside">
+                    <div className="info-card glass-card">
+                        <h4>Why HealConnect?</h4>
+                        <ul>
+                            <li>Verified AI-powered Triage</li>
+                            <li>End-to-end Encrypted Calls</li>
+                            <li>Instant Prescription Delivery</li>
+                            <li>24/7 Specialist Availability</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default BookConsultation;

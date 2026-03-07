@@ -1,1 +1,152 @@
-import React, { useState } from 'react';import { useNavigate } from 'react-router-dom';import { FaArrowLeft, FaUpload, FaShoppingCart } from 'react-icons/fa';import { mockPrescriptions } from '../../../data/mockData';import './Prescriptions.css';const Prescriptions = () => {    const navigate = useNavigate();    const [uploadedFile, setUploadedFile] = useState(null);    const handleFileUpload = (e) => {        const file = e.target.files[0];        if (file) {            setUploadedFile(file.name);            alert(`Prescription uploaded: ${file.name}`);        }    };    const handleOrderMedicine = (prescription) => {        alert(`Ordering medicines from prescription ${prescription.id}...`);    };    return (        <div className="prescriptions-container">            <div className="prescriptions-header">                <button onClick={() => navigate('/dashboard/patient')} className="back-btn">                    <FaArrowLeft /> Back                </button>                <h2>My Prescriptions</h2>            </div>            <div className="upload-section">                <h3>Upload New Prescription</h3>                <label className="upload-btn">                    <FaUpload /> Choose File                    <input type="file" accept="image/*,.pdf" onChange={handleFileUpload} style={{ display: 'none' }} />                </label>                {uploadedFile && <p className="upload-success">✓ Uploaded: {uploadedFile}</p>}            </div>            <div className="prescriptions-list">                <h3>Previous Prescriptions</h3>                {mockPrescriptions.map(prescription => (                    <div key={prescription.id} className="prescription-card">                        <div className="prescription-header">                            <div>                                <h4>{prescription.doctorName}</h4>                                <p className="prescription-date">{prescription.date.toLocaleDateString()}</p>                            </div>                        </div>                        <div className="medicines-list">                            <h5>Medicines</h5>                            {prescription.medicines.map((med, index) => (                                <div key={index} className="medicine-item">                                    <p><strong>{med.name}</strong></p>                                    <p>Dosage: {med.dosage}</p>                                    <p>Duration: {med.duration}</p>                                </div>                            ))}                        </div>                        {prescription.tests.length > 0 && (                            <div className="tests-list">                                <h5>Recommended Tests</h5>                                {prescription.tests.map((test, index) => (                                    <p key={index}>• {test}</p>                                ))}                            </div>                        )}                        {prescription.notes && (                            <div className="prescription-notes">                                <h5>Notes</h5>                                <p>{prescription.notes}</p>                            </div>                        )}                        <button                             className="order-btn"                            onClick={() => handleOrderMedicine(prescription)}                        >                            <FaShoppingCart /> Order Medicines Online                        </button>                    </div>                ))}            </div>            {mockPrescriptions.length === 0 && (                <div className="empty-state">                    <p style={{ fontSize: '3rem' }}>💊</p>                    <h3>No prescriptions yet</h3>                    <p>Your prescriptions will appear here after consultations</p>                </div>            )}        </div>    );};export default Prescriptions;
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaArrowLeft, FaUpload, FaShoppingCart, FaPrescription, FaUserMd, FaCalendarAlt } from "react-icons/fa";
+import { api } from "../../../api";
+import "./Prescriptions.css";
+
+const Prescriptions = () => {
+  const navigate = useNavigate();
+  const [prescriptions, setPrescriptions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [uploadedFile, setUploadedFile] = useState(null);
+
+  const getPatientId = () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("healconnect_user") || "{}");
+      return user.id || user.email || "demo-patient";
+    } catch {
+      return "demo-patient";
+    }
+  };
+
+  useEffect(() => {
+    const fetchPrescriptions = async () => {
+      try {
+        const id = getPatientId();
+        const data = await api.getPrescriptions(id);
+        setPrescriptions(data);
+      } catch (error) {
+        console.error("Error fetching prescriptions:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPrescriptions();
+  }, []);
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setUploadedFile(file.name);
+      alert(`Prescription uploaded: ${file.name}`);
+    }
+  };
+
+  const handleOrderMedicine = (prescription) => {
+    alert(`Ordering medicines from prescription ${prescription.sk}...`);
+  };
+
+  return (
+    <div className="prescriptions-container">
+      <div className="prescriptions-header">
+        <button onClick={() => navigate("/dashboard/patient")} className="back-btn">
+          <FaArrowLeft /> Back
+        </button>
+        <div className="header-info">
+          <h2>My Prescriptions</h2>
+          <p className="subtitle">Official clinical records from your doctors</p>
+        </div>
+      </div>
+
+      <div className="upload-section glass-card">
+        <div className="upload-content">
+          <h3>Upload Prescription</h3>
+          <p>Have a physical prescription? Scan and store it here safely.</p>
+        </div>
+        <label className="upload-btn">
+          <FaUpload /> Choose File
+          <input type="file" accept="image/*,.pdf" onChange={handleFileUpload} style={{ display: "none" }} />
+        </label>
+        {uploadedFile && <p className="upload-success">✓ Uploaded: {uploadedFile}</p>}
+      </div>
+
+      <div className="prescriptions-list">
+        <h3>Clinical History</h3>
+        
+        {loading ? (
+          <div className="loading-state">Syncing with medical vault...</div>
+        ) : prescriptions.length > 0 ? (
+          prescriptions.map((prescription) => (
+            <div key={prescription.sk} className="prescription-card glass-card">
+              <div className="card-top">
+                <div className="doctor-info">
+                  <div className="doc-avatar">
+                    <FaUserMd />
+                  </div>
+                  <div>
+                    <h4>{prescription.doctorName}</h4>
+                    <p className="doc-id">Specialist Registration: {prescription.doctorId}</p>
+                  </div>
+                </div>
+                <div className="date-badge">
+                  <FaCalendarAlt />
+                  <span>{new Date(prescription.createdAt).toLocaleDateString("en-IN", { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                </div>
+              </div>
+
+              <div className="medicines-grid">
+                <h5><FaPrescription /> Prescribed Medications</h5>
+                {prescription.medicines.map((med, index) => (
+                  <div key={index} className="medicine-item">
+                    <div className="med-main">
+                      <strong>{med.name}</strong>
+                      <span className="med-dosage">{med.dosage}</span>
+                    </div>
+                    <div className="med-meta">
+                      <span>{med.duration}</span> • <span>{med.instructions}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {prescription.tests && prescription.tests.length > 0 && (
+                <div className="tests-list">
+                  <h5>Recommended Lab Tests</h5>
+                  <div className="test-tags">
+                    {prescription.tests.map((test, index) => (
+                      <span key={index} className="test-tag">{test}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {prescription.notes && (
+                <div className="prescription-notes">
+                  <h5>Clinical Notes</h5>
+                  <p>{prescription.notes}</p>
+                </div>
+              )}
+
+              <div className="card-actions">
+                <button className="download-btn" onClick={() => alert("Generating Secure PDF...")}>
+                  Download Clinical Record
+                </button>
+                <button className="order-btn" onClick={() => handleOrderMedicine(prescription)}>
+                  <FaShoppingCart /> Order Fast Delivery
+                </button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="empty-state">
+            <div className="empty-icon">💊</div>
+            <h3>No Cloud Prescriptions Found</h3>
+            <p>Your prescriptions will appear here after a doctor reviews your case.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Prescriptions;

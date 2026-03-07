@@ -1,1 +1,114 @@
-import React from 'react';import { useNavigate } from 'react-router-dom';import { FaArrowLeft, FaDownload, FaEye } from 'react-icons/fa';import { mockAppointments } from '../../../data/mockData';import './MyVisits.css';const MyVisits = () => {    const navigate = useNavigate();    const handleDownloadPDF = (appointment) => {        alert(`Downloading visit summary for ${appointment.doctorName}...`);    };    return (        <div className="my-visits">            <div className="visits-header">                <button onClick={() => navigate('/dashboard/patient')} className="back-btn">                    <FaArrowLeft /> Back                </button>                <h2>My Visits</h2>            </div>            <div className="visits-list">                {mockAppointments.map(appointment => (                    <div key={appointment.id} className="visit-card">                        <div className="visit-header">                            <div>                                <h3>{appointment.doctorName}</h3>                                <p className="specialty">{appointment.specialty}</p>                            </div>                            <span className={`status-badge ${appointment.status}`}>                                {appointment.status}                            </span>                        </div>                        <div className="visit-details">                            <p><strong>Date:</strong> {appointment.date.toLocaleDateString()}</p>                            <p><strong>Type:</strong> {appointment.type === 'video' ? 'Video Consultation' : 'In-person'}</p>                            <p><strong>Symptoms:</strong> {appointment.symptoms.join(', ')}</p>                            <p><strong>AI Triage:</strong> {appointment.triageResult}</p>                        </div>                        {appointment.status === 'completed' && (                            <>                                {appointment.doctorNotes && (                                    <div className="doctor-notes">                                        <h4>Doctor's Notes</h4>                                        <p>{appointment.doctorNotes}</p>                                    </div>                                )}                                {appointment.prescription && (                                    <div className="prescription-summary">                                        <h4>Prescription</h4>                                        <p>{appointment.prescription}</p>                                    </div>                                )}                                <div className="visit-actions">                                    <button onClick={() => handleDownloadPDF(appointment)}>                                        <FaDownload /> Download PDF                                    </button>                                    <button onClick={() => navigate('/dashboard/patient/messages')}>                                        <FaEye /> View Details                                    </button>                                </div>                            </>                        )}                    </div>                ))}            </div>            {mockAppointments.length === 0 && (                <div className="empty-state">                    <p style={{ fontSize: '3rem' }}>📋</p>                    <h3>No visits yet</h3>                    <p>Your consultation history will appear here</p>                </div>            )}        </div>    );};export default MyVisits;
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft, FaDownload, FaEye, FaCalendarDay } from 'react-icons/fa';
+import { useAuth } from '../../../context/AuthContext';
+import { api } from '../../../api';
+import './MyVisits.css';
+
+const MyVisits = () => {
+    const navigate = useNavigate();
+    const { user } = useAuth();
+    const [visits, setVisits] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchVisits = async () => {
+            const patientId = user?.id || user?.email;
+            if (!patientId) {
+                setLoading(false);
+                return;
+            }
+            try {
+                const data = await api.getCasesByPatient(patientId);
+                const sorted = data.sort((a, b) => (b.submittedAt || 0) - (a.submittedAt || 0));
+                setVisits(sorted);
+            } catch (err) {
+                console.error("Error fetching visits:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchVisits();
+    }, [user]);
+
+    const handleDownloadPDF = (visit) => {
+        alert(`Generating Secure Clinical Summary for session ${visit.sessionId}...`);
+    };
+
+    if (loading) {
+        return <div className="visits-loading">Loading your health records...</div>;
+    }
+
+    return (
+        <div className="my-visits-container">
+            <div className="visits-header">
+                <div className="visits-back-wrapper">
+                    <button onClick={() => navigate('/dashboard/patient')} className="visits-back-btn">
+                        <FaArrowLeft /> Back to Dashboard
+                    </button>
+                </div>
+                <h2>My Clinical Visits</h2>
+                <p className="subtitle">View and manage your consultation history</p>
+            </div>
+
+            <div className="visits-list">
+                {visits.map(visit => (
+                    <div key={visit.sk} className="visit-card glass-card">
+                        <div className="visit-main-info">
+                            <div className="visit-status">
+                                <span className={`urgency-pill ${visit.urgency}`}>
+                                    {visit.urgency} Urgency
+                                </span>
+                                <span className={`status-tag ${visit.status}`}>
+                                    {visit.status.toUpperCase()}
+                                </span>
+                            </div>
+                            
+                            <div className="visit-meta">
+                                <div className="meta-item">
+                                    <FaCalendarDay />
+                                    <span>{new Date(visit.submittedAt).toLocaleDateString()}</span>
+                                </div>
+                                <div className="specialty-badge">{visit.specialty}</div>
+                            </div>
+
+                            <div className="symptoms-section">
+                                <h4>Reported Symptoms</h4>
+                                <div className="symptoms-tags">
+                                    {(Array.isArray(visit.symptoms) ? visit.symptoms : []).map((s, idx) => (
+                                        <span key={idx} className="symptom-tag">{s}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="visit-footer">
+                            <div className="footer-actions">
+                                <button className="action-btn secondary" onClick={() => handleDownloadPDF(visit)}>
+                                    <FaDownload /> Summary
+                                </button>
+                                <button className="action-btn primary" onClick={() => navigate(`/dashboard/patient/ai-chat`)}>
+                                    <FaEye /> View Chat
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+
+                {visits.length === 0 && (
+                    <div className="empty-state">
+                        <div className="empty-icon shadow-pulse">📋</div>
+                        <h3>No visits found</h3>
+                        <p>Start a conversation with our AI Assistant to get your first medical triage.</p>
+                        <button className="start-btn" onClick={() => navigate('/dashboard/patient/ai-chat')}>
+                            Start AI Chat
+                        </button>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default MyVisits;

@@ -1,1 +1,245 @@
-.case-detail-container {    min-height: 100vh;    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);    color: white;    padding: 2rem;}.case-detail-header {    display: flex;    align-items: center;    gap: 1rem;    margin-bottom: 2rem;}.case-detail-content {    max-width: 1000px;    margin: 0 auto;    display: flex;    flex-direction: column;    gap: 1.5rem;}.patient-info-card,.symptoms-card,.vitals-card,.notes-card {    background: rgba(30, 41, 59, 0.7);    padding: 2rem;    border-radius: 16px;    border: 1px solid rgba(255, 255, 255, 0.1);}.patient-info-card h3,.symptoms-card h3,.vitals-card h3,.notes-card h3 {    margin-top: 0;    margin-bottom: 1.5rem;    color: #3b82f6;}.info-grid,.vitals-grid {    display: grid;    grid-template-columns: repeat(2, 1fr);    gap: 1.5rem;}.info-item label,.vital-item label {    display: block;    color: #94a3b8;    font-size: 0.9rem;    margin-bottom: 0.5rem;}.info-item p,.vital-item p {    margin: 0;    font-size: 1.1rem;    font-weight: 600;}.urgency-badge {    display: inline-block;    padding: 0.5rem 1rem;    border-radius: 20px;    font-weight: 700;    color: white;    margin-bottom: 1rem;}.symptoms-list {    display: flex;    flex-wrap: wrap;    gap: 0.5rem;    margin: 1rem 0;}.symptom-tag {    padding: 0.5rem 1rem;    background: rgba(59, 130, 246, 0.2);    border: 1px solid #3b82f6;    border-radius: 20px;    font-size: 0.9rem;}.specialty-info {    color: #cbd5e1;    margin-top: 1rem;}.notes-card textarea {    width: 100%;    padding: 1rem;    background: rgba(15, 23, 42, 0.7);    border: 1px solid rgba(255, 255, 255, 0.1);    border-radius: 8px;    color: white;    font-size: 1rem;    font-family: inherit;    resize: vertical;}.notes-card textarea:focus {    outline: none;    border-color: #3b82f6;}.action-buttons {    display: grid;    grid-template-columns: repeat(2, 1fr);    gap: 1rem;}.consult-btn,.prescription-btn {    padding: 1rem;    border: none;    border-radius: 12px;    font-size: 1.1rem;    font-weight: 700;    cursor: pointer;    display: flex;    align-items: center;    justify-content: center;    gap: 0.5rem;    transition: all 0.2s;}.consult-btn {    background: #14b8a6;    color: white;}.consult-btn:hover {    background: #0d9488;    transform: translateY(-2px);}.prescription-btn {    background: #3b82f6;    color: white;}.prescription-btn:hover {    background: #2563eb;    transform: translateY(-2px);}@media (max-width: 768px) {    .info-grid,    .vitals-grid,    .action-buttons {        grid-template-columns: 1fr;    }}
+.case-detail-page {
+    min-height: 100vh;
+    background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+    color: #f1f5f9;
+    padding: 2.5rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.case-detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 3rem;
+}
+
+.clinical-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.glass-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    margin-bottom: 3.5rem;
+    border-radius: 20px;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(-5px);
+}
+
+.header-titles h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.case-id {
+    font-size: 0.85rem;
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0.6;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    font-size: 1.25rem;
+    color: #3b82f6;
+}
+
+.patient-master-card .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.info-node label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.info-node p {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: white;
+}
+
+.ai-assessment-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-assessment-card.urgency-emergency { border-color: rgba(239, 68, 68, 0.3); }
+.ai-assessment-card.urgency-emergency .urgency-glow {
+    position: absolute;
+    top: 0; right: 0;
+    width: 100px; height: 100px;
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.1) 0%, transparent 70%);
+}
+
+.urgency-status {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.urgency-status .badge {
+    padding: 0.4rem 1rem;
+    background: #3b82f6;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: white;
+}
+
+.urgency-emergency .badge { background: #ef4444; }
+
+.label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    margin-bottom: 1rem;
+}
+
+.symptoms-section { margin-bottom: 25px; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.tag {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+}
+
+.transcript-viewport {
+    height: 600px;
+    overflow-y: auto;
+    padding: 2rem;
+    background: rgba(15, 23, 42, 0.3);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.transcript-bubble {
+    max-width: 80%;
+    padding: 1.5rem;
+    border-radius: 20px;
+}
+
+.transcript-bubble.ai {
+    align-self: flex-start;
+    background: rgba(59, 130, 246, 0.1);
+    border-left: 4px solid #3b82f6;
+}
+
+.transcript-bubble.user {
+    align-self: flex-end;
+    background: rgba(255, 255, 255, 0.05);
+    border-right: 4px solid rgba(255, 255, 255, 0.2);
+}
+
+.bubble-header {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 0.75rem;
+}
+
+.notes-console {
+    position: sticky;
+    top: 2rem;
+    height: calc(100vh - 4rem);
+    display: flex;
+    flex-direction: column;
+}
+
+.clinical-textarea {
+    flex: 1;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 1.5rem;
+    color: white;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    resize: none;
+    margin: 2rem 0;
+    outline: none;
+}
+
+.clinical-textarea:focus { border-color: #3b82f6; }
+
+.console-actions {
+    display: grid;
+    gap: 1rem;
+}
+
+.tele-btn, .presc-btn {
+    padding: 1.25rem;
+    border-radius: 16px;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    transition: 0.3s;
+}
+
+.tele-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.presc-btn {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    border: none;
+    color: white;
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+}
+
+.presc-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
+}
+
+@media (max-width: 1200px) {
+    .case-detail-layout { grid-template-columns: 1fr; }
+    .notes-console { position: relative; height: auto; }
+}
+
+@media (max-width: 768px) {
+    .clinical-grid { grid-template-columns: 1fr; }
+}

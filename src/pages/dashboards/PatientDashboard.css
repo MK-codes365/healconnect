@@ -1,1 +1,219 @@
-.patient-dashboard-container {    min-height: 100vh;    padding: 2rem;    background-color: #0f172a;     color: white;    font-family: 'Inter', sans-serif;}.dashboard-header-section {    display: flex;    justify-content: space-between;    align-items: center;    margin-bottom: 3rem;    padding-bottom: 1rem;    border-bottom: 1px solid #1e293b;}.header-content h1 {    font-size: 2rem;    margin: 0;    font-weight: 700;}.highlight-text {    color: #38bdf8; }.header-content p {    color: #94a3b8;    margin-top: 0.5rem;}.logout-button {    background-color: #ef4444;    color: white;    border: none;    padding: 0.75rem 1.5rem;    border-radius: 8px;    cursor: pointer;    font-weight: 600;    transition: background-color 0.2s;}.logout-button:hover {    background-color: #dc2626;}.dashboard-grid {    display: grid;    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));    gap: 1.5rem;}.dashboard-card {    background-color: #1e293b;    border-radius: 12px;    padding: 1.5rem;    cursor: pointer;    transition: transform 0.2s, box-shadow 0.2s;    display: flex;    align-items: center;    gap: 1.5rem;    border: 1px solid #334155;}.dashboard-card:hover {    transform: translateY(-4px);    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);    background-color: #334155;}.card-icon {    width: 60px;    height: 60px;    border-radius: 12px;    display: flex;    align-items: center;    justify-content: center;    flex-shrink: 0;}.card-info h3 {    margin: 0 0 0.5rem 0;    font-size: 1.25rem;    color: #f1f5f9;}.card-info p {    margin: 0;    color: #94a3b8;    font-size: 0.9rem;    line-height: 1.4;}@media (max-width: 640px) {    .dashboard-header-section {        flex-direction: column;        align-items: flex-start;        gap: 1rem;    }    .logout-button {        width: 100%;    }}
+.patient-dashboard-wrapper {
+    min-height: 100vh;
+    background: radial-gradient(circle at 0% 0%, #1e293b 0%, #0f172a 100%);
+    color: #f1f5f9;
+    font-family: 'Inter', sans-serif;
+}
+
+/* --- TOP NAV --- */
+.dashboard-top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 3rem;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.brand-dot {
+    width: 12px;
+    height: 12px;
+    background: var(--primary);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--primary);
+}
+
+.brand-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #94a3b8;
+}
+
+.logout-btn-minimal {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94a3b8;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.logout-btn-minimal:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+/* --- MAIN CONTENT --- */
+.dashboard-main-content {
+    padding: 4rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.welcome-hero {
+    margin-bottom: 4rem;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.welcome-hero h1 {
+    font-size: 2.8rem; /* Reduced from 3.5rem to prevent overflow */
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.04em;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.welcome-hero p {
+    font-size: 1.25rem;
+    color: #94a3b8;
+}
+
+/* --- FEATURE GRID --- */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding-bottom: 2rem;
+}
+
+.feature-card {
+    position: relative;
+    padding: 2.5rem;
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 28px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInUp 0.6s ease-out both;
+    animation-delay: var(--delay);
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(36, 48, 68, 0.7);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.card-top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.feature-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.feature-arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    transition: all 0.3s;
+}
+
+.feature-card:hover .feature-arrow {
+    background: white;
+    color: #0f172a;
+    transform: translateX(4px);
+}
+
+.feature-info h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: white;
+}
+
+.feature-info p {
+    color: #94a3b8;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.card-blur-glow {
+    position: absolute;
+    bottom: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    filter: blur(80px);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.feature-card:hover .card-blur-glow {
+    opacity: 0.15;
+}
+
+/* --- FOOTER --- */
+.dashboard-footer {
+    padding: 4rem 3rem;
+    text-align: center;
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .dashboard-top-nav { padding: 1rem 1.5rem; }
+    .dashboard-main-content { padding: 3rem 1.5rem; }
+    .welcome-hero h1 { font-size: 2.5rem; }
+    .feature-grid { grid-template-columns: 1fr; }
+}

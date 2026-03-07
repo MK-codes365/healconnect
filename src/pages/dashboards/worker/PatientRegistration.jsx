@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaUserPlus } from 'react-icons/fa';
-import './PatientRegistration.css';
+import { api } from '../../../api';
 
 const PatientRegistration = () => {
     const navigate = useNavigate();
@@ -13,19 +10,25 @@ const PatientRegistration = () => {
         phone: '',
         medicalHistory: ''
     });
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (field, value) => {
         setFormData(prev => ({ ...prev, [field]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        import('../../../utils/storage').then(module => {
-            module.addPatient(formData);
-            alert(`Patient ${formData.name} registered successfully!`);
+        setLoading(true);
+        try {
+            await api.registerPatient(formData);
+            alert(`Patient ${formData.name} registered successfully in the Cloud!`);
             navigate('/dashboard/worker');
-        });
+        } catch (error) {
+            console.error(error);
+            alert('Failed to register patient. Please check your connection.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -107,8 +110,8 @@ const PatientRegistration = () => {
                     </div>
                 </div>
 
-                <button type="submit" className="submit-btn">
-                    <FaUserPlus /> Register Patient
+                <button type="submit" className="submit-btn" disabled={loading}>
+                    <FaUserPlus /> {loading ? 'Registering...' : 'Register Patient'}
                 </button>
             </form>
         </div>
