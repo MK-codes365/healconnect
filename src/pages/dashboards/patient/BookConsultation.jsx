@@ -17,9 +17,11 @@ const BookConsultation = () => {
     const [bookingType, setBookingType] = useState('instant');
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
     const [selectedTime, setSelectedTime] = useState('');
+    const [showVideo, setShowVideo] = useState(false);
+    const [roomName, setRoomName] = useState('');
     const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState(false);
     const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
 
     const handleBooking = async () => {
         if (!user?.id && !user?.email) {
@@ -35,10 +37,17 @@ const BookConsultation = () => {
         setLoading(true);
         setError(null);
 
+        // Payment Simulation
+        const proceed = window.confirm("Consultation Fee: ₹500. Procced with secure payment simulation?");
+        if (!proceed) {
+            setLoading(false);
+            return;
+        }
+
         try {
             const patientId = user?.id || user?.email;
+            const newRoomName = `HealConnect-${patientId.replace(/[^a-zA-Z0-9]/g, '')}-${Date.now()}`;
             
-            // Create a new CASE record in DynamoDB for this booking
             const bookingRecord = {
                 id: `BOOK-${Date.now()}`,
                 patientId: patientId,
@@ -51,16 +60,20 @@ const BookConsultation = () => {
                 recommendation: triageData?.recommendation || "Consultation requested",
                 submittedAt: Date.now(),
                 appointmentDate: bookingType === 'schedule' ? selectedDate : 'Immediate',
-                appointmentTime: bookingType === 'schedule' ? selectedTime : 'Now'
+                appointmentTime: bookingType === 'schedule' ? selectedTime : 'Now',
+                paymentStatus: 'paid',
+                roomName: newRoomName
             };
 
-            // Use the cases API to save this to DynamoDB
             await api.createCase(bookingRecord);
             
-            setSuccess(true);
-            setTimeout(() => {
-                navigate('/dashboard/patient/visits');
-            }, 2500);
+            if (bookingType === 'instant') {
+                setRoomName(newRoomName);
+                setShowVideo(true);
+            } else {
+                setSuccess(true);
+                setTimeout(() => navigate('/dashboard/patient/visits'), 2500);
+            }
         } catch (err) {
             console.error("Booking error:", err);
             setError("Failed to schedule appointment. Please try again.");
@@ -68,6 +81,22 @@ const BookConsultation = () => {
             setLoading(false);
         }
     };
+
+    if (showVideo) {
+        return (
+            <div className="video-consultation-overlay">
+                <div className="video-header">
+                    <h3>Secure Video Consultation</h3>
+                    <button onClick={() => setShowVideo(false)} className="close-video-btn">End Session</button>
+                </div>
+                <iframe 
+                    src={`https://meet.jit.si/${roomName}`}
+                    style={{ width: '100%', height: 'calc(100% - 60px)', border: 'none' }}
+                    allow="camera; microphone; fullscreen; display-capture; autoplay"
+                ></iframe>
+            </div>
+        );
+    }
 
     if (success) {
         return (

@@ -33,7 +33,25 @@ const MyVisits = () => {
     }, [user]);
 
     const handleDownloadPDF = (visit) => {
-        alert(`Generating Secure Clinical Summary for session ${visit.sessionId}...`);
+        const printWindow = window.open('', '_blank');
+        const content = `
+            <html>
+                <head><title>Clinical Visit Summary - HealConnect</title></head>
+                <body style="font-family: sans-serif; padding: 40px;">
+                    <h1 style="color: #10a37f;">HealConnect Clinical Summary</h1>
+                    <hr/>
+                    <p><strong>Date:</strong> ${new Date(visit.submittedAt).toLocaleDateString()}</p>
+                    <p><strong>Specialty:</strong> ${visit.specialty}</p>
+                    <p><strong>Urgency:</strong> ${visit.urgency}</p>
+                    <h3>Symptoms:</h3>
+                    <ul>${(visit.symptoms || []).map(s => `<li>${s}</li>`).join('')}</ul>
+                    <p><strong>AI Recommendation:</strong> ${visit.recommendation || 'Consultation via HealConnect'}</p>
+                    <script>window.print();</script>
+                </body>
+            </html>
+        `;
+        printWindow.document.write(content);
+        printWindow.document.close();
     };
 
     if (loading) {

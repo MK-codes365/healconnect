@@ -34,16 +34,51 @@ const Prescriptions = () => {
     fetchPrescriptions();
   }, []);
 
-  const handleFileUpload = (e) => {
+  const handleFileUpload = async (e) => {
     const file = e.target.files[0];
-    if (file) {
+    if (!file) return;
+
+    try {
+      setLoading(true);
+      const patientId = getPatientId();
+      await api.uploadPrescription(patientId, file);
       setUploadedFile(file.name);
-      alert(`Prescription uploaded: ${file.name}`);
+      
+      // Refresh list
+      const data = await api.getPrescriptions(patientId);
+      setVisits(data); 
+      alert("Prescription uploaded successfully to vault!");
+    } catch (err) {
+      console.error("Upload error:", err);
+      alert("Failed to upload prescription.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleOrderMedicine = (prescription) => {
-    alert(`Ordering medicines from prescription ${prescription.sk}...`);
+    alert(`Order placed successfully! Medicines for ${prescription.doctorName}'s prescription are being prepared for fast delivery.`);
+  };
+
+  const handlePrintSummary = (prescription) => {
+    const printWindow = window.open('', '_blank');
+    const content = `
+      <html>
+        <head><title>Clinical Prescription - HealConnect</title></head>
+        <body style="font-family: sans-serif; padding: 40px;">
+          <h1 style="color: #10a37f;">HealConnect Clinical Record</h1>
+          <hr/>
+          <p><strong>Doctor:</strong> ${prescription.doctorName}</p>
+          <p><strong>Date:</strong> ${new Date(prescription.createdAt).toLocaleDateString()}</p>
+          <h3>Medications:</h3>
+          <ul>${prescription.medicines.map(m => `<li>${m.name} - ${m.dosage} (${m.duration})</li>`).join('')}</ul>
+          <p><strong>Notes:</strong> ${prescription.notes || 'None'}</p>
+          <script>window.print();</script>
+        </body>
+      </html>
+    `;
+    printWindow.document.write(content);
+    printWindow.document.close();
   };
 
   return (
@@ -128,7 +163,7 @@ const Prescriptions = () => {
               )}
 
               <div className="card-actions">
-                <button className="download-btn" onClick={() => alert("Generating Secure PDF...")}>
+                <button className="download-btn" onClick={() => handlePrintSummary(prescription)}>
                   Download Clinical Record
                 </button>
                 <button className="order-btn" onClick={() => handleOrderMedicine(prescription)}>

@@ -1,1 +1,254 @@
-.teleconsultation-container {    height: 100vh;    background: #0f172a;    color: white;    display: grid;    grid-template-columns: 1fr 350px;    grid-template-rows: 1fr auto;    gap: 1rem;    padding: 1rem;}.video-area {    position: relative;    background: #1e293b;    border-radius: 16px;    overflow: hidden;}.main-video {    width: 100%;    height: 100%;    display: flex;    align-items: center;    justify-content: center;}.video-placeholder {    text-align: center;    color: #94a3b8;}.video-placeholder p {    font-size: 2rem;    margin-bottom: 0.5rem;}.self-video {    position: absolute;    bottom: 1rem;    right: 1rem;    width: 200px;    height: 150px;    background: #334155;    border-radius: 12px;    border: 2px solid #3b82f6;}.video-placeholder-small {    width: 100%;    height: 100%;    display: flex;    align-items: center;    justify-content: center;    color: #94a3b8;}.patient-sidebar {    background: rgba(30, 41, 59, 0.7);    border-radius: 16px;    padding: 1.5rem;    overflow-y: auto;}.patient-sidebar h3 {    margin-top: 0;    color: #3b82f6;}.patient-details p {    margin: 0.75rem 0;    color: #cbd5e1;}.patient-details .medium {    color: #f59e0b;    font-weight: 700;}.quick-notes {    margin-top: 2rem;}.quick-notes h4 {    color: #3b82f6;    margin-bottom: 0.5rem;}.quick-notes textarea {    width: 100%;    padding: 0.75rem;    background: rgba(15, 23, 42, 0.7);    border: 1px solid rgba(255, 255, 255, 0.1);    border-radius: 8px;    color: white;    font-family: inherit;    resize: none;}.quick-notes textarea:focus {    outline: none;    border-color: #3b82f6;}.controls-bar {    grid-column: 1 / -1;    display: flex;    justify-content: center;    gap: 1rem;    padding: 1rem;    background: rgba(30, 41, 59, 0.7);    border-radius: 16px;}.control-btn {    padding: 1rem 2rem;    background: #334155;    border: none;    color: white;    border-radius: 12px;    cursor: pointer;    font-size: 1.2rem;    display: flex;    align-items: center;    gap: 0.5rem;    transition: all 0.2s;}.control-btn:hover {    background: #475569;}.control-btn.disabled {    background: #ef4444;}.control-btn.end-call {    background: #ef4444;}.control-btn.end-call:hover {    background: #dc2626;}@media (max-width: 1024px) {    .teleconsultation-container {        grid-template-columns: 1fr;        grid-template-rows: 1fr auto auto;    }}
+.teleconsultation-container {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: #0f172a; /* Solid background */
+    color: white;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+}
+
+.video-area {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    height: 100%;
+}
+
+.main-video {
+    flex: 1;
+    background: #020617; /* High contrast black */
+    border: 1px solid #334155;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+.jitsi-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.video-placeholder {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    color: #475569;
+}
+
+.video-placeholder .icon {
+    font-size: 4rem;
+    color: #10a37f;
+    opacity: 0.8;
+}
+
+.patient-sidebar {
+    background: #1e293b; /* Solid sidebar */
+    border: 1px solid #334155;
+    border-radius: 24px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Allows scrolling to see all vitals */
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 1.35rem;
+    color: #10a37f;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 800;
+}
+
+.patient-mini-profile {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #0f172a;
+    border-radius: 16px;
+    border: 1px solid #334155;
+}
+
+.mini-avatar {
+    font-size: 3rem;
+    color: #10a37f;
+}
+
+.patient-mini-profile h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: white;
+    font-weight: 700;
+}
+
+.patient-mini-profile span {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.detail-item label {
+    font-size: 0.7rem;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+}
+
+.status-badge {
+    padding: 0.5rem 1.25rem;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: inline-block;
+}
+
+.status-badge.HIGH, .status-badge.EMERGENCY { background: #ef4444; color: white; }
+.status-badge.CONSULT, .status-badge.MEDIUM { background: #f59e0b; color: white; }
+.status-badge.NORMAL, .status-badge.LOW { background: #10a37f; color: white; }
+
+.vitals-snapshot h4 {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.vitals-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.vital {
+    background: #0f172a; /* Dark solid card */
+    border: 1px solid #334155;
+    padding: 1.5rem;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.vital .label {
+    font-size: 0.75rem;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 600;
+}
+
+.vital .value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #f8fafc;
+}
+
+.vital .value small {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.sidebar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: auto;
+}
+
+.presc-btn-action {
+    background: #10a37f;
+    color: white;
+    border: none;
+    padding: 1.25rem;
+    border-radius: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 15px -3px rgba(16, 163, 127, 0.3);
+}
+
+.presc-btn-action:hover {
+    background: #0d8a6a;
+    transform: translateY(-3px);
+}
+
+.end-call-btn {
+    background: #0f172a;
+    color: #ef4444;
+    border: 1px solid #ef4444;
+    padding: 1.25rem;
+    border-radius: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+}
+
+.end-call-btn:hover {
+    background: #ef4444;
+    color: white;
+}
+
+.session-security {
+    font-size: 0.75rem;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    font-weight: 600;
+}
+
+.pulse-dot {
+    color: #10a37f;
+    font-size: 0.5rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.loading-state {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #10a37f;
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: #0f172a;
+}

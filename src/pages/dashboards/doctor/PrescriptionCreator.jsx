@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { FaArrowLeft, FaPlus, FaTrash, FaDownload, FaShare } from 'react-icons/fa';
 import { api } from '../../../api';
 import { useAuth } from '../../../context/AuthContext';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import './PrescriptionCreator.css';
 
 const PrescriptionCreator = () => {
@@ -75,6 +77,74 @@ const PrescriptionCreator = () => {
         } finally {
             setIsSaving(false);
         }
+    };
+
+    const generatePDF = () => {
+        const doc = new jsPDF();
+        
+        doc.setFillColor(15, 23, 42); 
+        doc.rect(0, 0, 210, 40, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(22);
+        doc.text("HealConnect", 15, 25);
+        doc.setFontSize(12);
+        doc.text("Secure Clinical Prescription", 15, 33);
+        
+        doc.setTextColor(30, 41, 59);
+        doc.setFontSize(11);
+        doc.text(`Doctor: ${user?.name || 'Specialist'}`, 15, 50);
+        doc.text(`Date: ${new Date().toLocaleDateString()}`, 150, 50);
+        doc.text(`Patient ID: ${patientId}`, 15, 60);
+
+        let yPos = 75;
+
+        const filledMedicines = medicines.filter(m => m.name.trim() !== '');
+        if (filledMedicines.length > 0) {
+            doc.setFontSize(14);
+            doc.text("Medications", 15, yPos);
+            yPos += 5;
+            
+            const tableData = filledMedicines.map(m => [
+                m.name, m.dosage, m.duration, m.instructions
+            ]);
+
+            autoTable(doc, {
+                startY: yPos,
+                head: [['Medicine', 'Dosage', 'Duration', 'Instructions']],
+                body: tableData,
+                theme: 'grid',
+                headStyles: { fillColor: [16, 163, 127] }, 
+            });
+            yPos = doc.lastAutoTable.finalY + 15;
+        }
+
+        const validTests = tests.filter(t => t.trim() !== '');
+        if (validTests.length > 0) {
+            doc.setFontSize(14);
+            doc.text("Diagnostic Tests", 15, yPos);
+            yPos += 10;
+            validTests.forEach((t, i) => {
+                doc.setFontSize(11);
+                doc.text(`• ${t}`, 20, yPos + (i * 7));
+            });
+            yPos += (validTests.length * 7) + 10;
+        }
+
+        if (notes.trim() !== '') {
+            yPos += 5;
+            doc.setFontSize(14);
+            doc.text("Clinical Notes", 15, yPos);
+            doc.setFontSize(11);
+            const splitNotes = doc.splitTextToSize(notes, 180);
+            doc.text(splitNotes, 15, yPos + 10);
+        }
+
+        if (filledMedicines.length === 0 && validTests.length === 0 && notes.trim() === '') {
+            alert("Please add at least one medicine, test, or note before generating a PDF.");
+            return;
+        }
+
+        doc.save(`Prescription_${patientId}_${Date.now()}.pdf`);
     };
 
     if (success) {
@@ -210,7 +280,7 @@ const PrescriptionCreator = () => {
                             ✓ Encrypted Cloud Transmission
                         </div>
                         <div className="footer-actions">
-                            <button className="secondary-btn" onClick={() => alert('PDF generation prepared.')}>
+                            <button className="secondary-btn" onClick={generatePDF}>
                                 <FaDownload /> Draft PDF
                             </button>
                             <button 

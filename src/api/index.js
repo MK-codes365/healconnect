@@ -194,5 +194,36 @@ export const api = {
       throw new Error(err.error || 'Delete User Error');
     }
     return response.json();
+  },
+
+  // --- Messaging ---
+  async sendMessage(messageData) {
+    const response = await fetch(`${API_BASE_URL}/messaging`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(messageData),
+    });
+    if (!response.ok) throw new Error('Message Send Error');
+    return response.json();
+  },
+
+  async getMessages(participantA, participantB) {
+    const response = await fetch(`${API_BASE_URL}/messaging/${participantA}/${participantB}`);
+    if (!response.ok) throw new Error('Fetch Messages Error');
+    return response.json();
+  },
+
+  // --- Uploads ---
+  async uploadPrescription(patientId, file) {
+    const formData = new FormData();
+    formData.append('patientId', patientId);
+    formData.append('prescription', file);
+
+    const response = await fetch(`${API_BASE_URL}/prescriptions/upload`, {
+      method: 'POST',
+      body: formData,
+    });
+    if (!response.ok) throw new Error('Upload Error');
+    return response.json();
   }
 };

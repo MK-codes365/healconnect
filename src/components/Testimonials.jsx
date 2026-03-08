@@ -1,1 +1,61 @@
-import React from 'react';import { FaQuoteLeft, FaStar } from 'react-icons/fa';import './Testimonials.css';const reviews = [    {        name: "Ramesh Kumar",        role: "Villager, Bihar",        text: "HealConnect saved my father's life. We connected with a specialist in Delhi within 10 minutes without travelling 50km.",        rating: 5    },    {        name: "Dr. Priya Desai",        role: "Cardiologist, AIIMS",        text: "The AI triage is incredibly accurate. It filters out non-emergencies so I can focus on patients who truly need critical care.",        rating: 5    },    {        name: "Anjali Singh",        role: "ASHA Worker",        text: "Reporting vitals used to take days of paperwork. Now I just upload them instantly and get doctor feedback in real-time.",        rating: 5    }];const Testimonials = () => {    return (        <section className="testimonials-section">            <div className="container">                <h2 className="section-title">Community Voices</h2>                <div className="testimonials-grid">                    {reviews.map((review, index) => (                        <div key={index} className="testimonial-card">                            <FaQuoteLeft className="quote-icon" />                            <p className="review-text">"{review.text}"</p>                            <div className="review-rating">                                {[...Array(review.rating)].map((_, i) => (                                    <FaStar key={i} className="star-icon" />                                ))}                            </div>                            <div className="reviewer-info">                                <div className="reviewer-avatar">                                    {review.name.charAt(0)}                                </div>                                <div className="reviewer-details">                                    <h4>{review.name}</h4>                                    <span>{review.role}</span>                                </div>                            </div>                        </div>                    ))}                </div>            </div>        </section>    );};export default Testimonials;
+import React from 'react';
+import { FaQuoteLeft, FaStar } from 'react-icons/fa';
+import Tilt from 'react-parallax-tilt';
+import './Testimonials.css';
+
+const reviews = [
+    {
+        name: "Ramesh Kumar",
+        role: "Villager, Bihar",
+        text: "HealConnect saved my father's life. We connected with a specialist in Delhi within 10 minutes without travelling 50km.",
+        rating: 5
+    },
+    {
+        name: "Dr. Priya Desai",
+        role: "Cardiologist, AIIMS",
+        text: "The AI triage is incredibly accurate. It filters out non-emergencies so I can focus on patients who truly need critical care.",
+        rating: 5
+    },
+    {
+        name: "Anjali Singh",
+        role: "ASHA Worker",
+        text: "Reporting vitals used to take days of paperwork. Now I just upload them instantly and get doctor feedback in real-time.",
+        rating: 5
+    }
+];
+
+const Testimonials = () => {
+    return (
+        <section className="testimonials-section">
+            <div className="container">
+                <h2 className="section-title">Community Voices</h2>
+                <div className="testimonials-grid">
+                    {reviews.map((review, index) => (
+                        <Tilt key={index} tiltMaxAngleX={15} tiltMaxAngleY={15} scale={1.03} transitionSpeed={400} glareEnable={true} glareMaxOpacity={0.15} glareColor="#ffffff" glarePosition="all">
+                            <div className="testimonial-card">
+                                <FaQuoteLeft className="quote-icon" />
+                                <p className="review-text">"{review.text}"</p>
+                                <div className="review-rating">
+                                    {[...Array(review.rating)].map((_, i) => (
+                                        <FaStar key={i} className="star-icon" />
+                                    ))}
+                                </div>
+                                <div className="reviewer-info">
+                                    <div className="reviewer-avatar">
+                                        {review.name.charAt(0)}
+                                    </div>
+                                    <div className="reviewer-details">
+                                        <h4>{review.name}</h4>
+                                        <span>{review.role}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </Tilt>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default Testimonials;

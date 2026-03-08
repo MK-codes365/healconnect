@@ -22,6 +22,7 @@ import BookConsultation from './pages/dashboards/patient/BookConsultation';
 import MyVisits from './pages/dashboards/patient/MyVisits';
 import Messaging from './pages/dashboards/patient/Messaging';
 import Prescriptions from './pages/dashboards/patient/Prescriptions';
+import Profile from './pages/dashboards/patient/Profile';
 import DoctorProfile from './pages/dashboards/doctor/DoctorProfile';
 import Appointments from './pages/dashboards/doctor/Appointments';
 import CaseDetail from './pages/dashboards/doctor/CaseDetail';
@@ -74,7 +75,8 @@ function App() {
               <Route path="/dashboard/patient/doctors" element={<DoctorDirectory />} />
               <Route path="/dashboard/patient/book" element={<BookConsultation />} />
               <Route path="/dashboard/patient/visits" element={<MyVisits />} />
-              <Route path="/dashboard/patient/messages" element={<Messaging />} />
+              <Route path="/dashboard/patient/messaging" element={<Messaging />} />
+              <Route path="/dashboard/patient/profile" element={<Profile />} />
               <Route path="/dashboard/patient/prescriptions" element={<Prescriptions />} />
               <Route path="/dashboard/worker" element={<HealthWorkerDashboard />} />
               <Route path="/dashboard/worker/register-patient" element={<PatientRegistration />} />

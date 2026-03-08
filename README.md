@@ -2,7 +2,6 @@
 
 <img width="150" height="150" alt="logo" src="https://github.com/user-attachments/assets/6aec885e-d1f7-4987-803c-c93a4c92666b" />
 
-
 # 🏥 Heal Connect
 
 ## Bridging Healthcare Gaps with AI-Powered Telemedicine
@@ -224,6 +223,7 @@ Admin Monitoring & Analytics
 | ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)                        | UI Framework         | 19.2.0  |
 | ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)                           | Build Tool           | 7.2.4   |
 | ![React Router](https://img.shields.io/badge/React%20Router-CA4245?style=flat-square&logo=react-router&logoColor=white) | Client-side Routing  | 7.10.1  |
+| ![Vite PWA](https://img.shields.io/badge/Vite%20PWA-646CFF?style=flat-square&logo=vite&logoColor=white)                 | PWA Support          | 1.2.0   |
 | ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)         | Programming Language | ES6+    |
 | ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)                           | Styling & Animations | Latest  |
 
@@ -233,13 +233,14 @@ Admin Monitoring & Analytics
 
 <div align="center">
 
-| Technology                                                                                                          | Purpose                           |
-| ------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| ![AWS Bedrock](https://img.shields.io/badge/AWS%20Bedrock-FF9900?style=flat-square&logo=amazon-aws&logoColor=white) | Managed AI/ML Service             |
-| ![Nova](https://img.shields.io/badge/Nova%20Model-4B8BBE?style=flat-square&logo=openai&logoColor=white)             | Advanced LLM for Medical Insights |
-| ![AWS IAM](https://img.shields.io/badge/AWS%20IAM-FF9900?style=flat-square&logo=amazon-aws&logoColor=white)         | Secure Authentication             |
-| ![AWS Lambda](https://img.shields.io/badge/AWS%20Lambda-FF9900?style=flat-square&logo=amazon-aws&logoColor=white)   | Serverless Computing              |
-| ![DynamoDB](https://img.shields.io/badge/DynamoDB-527FFF?style=flat-square&logo=amazon-dynamodb&logoColor=white)    | NoSQL Database                    |
+| Technology                                                                                                          | Purpose                            |
+| ------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| ![AWS Bedrock](https://img.shields.io/badge/AWS%20Bedrock-FF9900?style=flat-square&logo=amazon-aws&logoColor=white) | Managed AI/ML Service              |
+| ![Nova](https://img.shields.io/badge/Nova%20Model-4B8BBE?style=flat-square&logo=openai&logoColor=white)             | Advanced LLMs (Nova, Gemma, Llama) |
+| ![Amazon S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=flat-square&logo=amazon-s3&logoColor=white)      | Cloud object storage for media     |
+| ![AWS IAM](https://img.shields.io/badge/AWS%20IAM-FF9900?style=flat-square&logo=amazon-aws&logoColor=white)         | Secure Authentication              |
+| ![AWS Lambda](https://img.shields.io/badge/AWS%20Lambda-FF9900?style=flat-square&logo=amazon-aws&logoColor=white)   | Serverless Computing               |
+| ![DynamoDB](https://img.shields.io/badge/DynamoDB-527FFF?style=flat-square&logo=amazon-dynamodb&logoColor=white)    | NoSQL Database                     |
 
 </div>
 
@@ -255,6 +256,17 @@ Admin Monitoring & Analytics
 | ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white) | Repository Hosting |
 
 </div>
+
+---
+
+## 🎨 Modern UI & 3D Animations
+
+Heal Connect is built to be not just functional, but **beautiful** and **engaging**. We've prioritized a premium user experience featuring:
+
+- ✨ **3D Glare & Parallax Tilts:** We implemented `react-parallax-tilt` across major landing page sections (Features, Roles, Testimonials) to give cards physical depth and lighting that mathematically respond to cursor movement.
+- 🚀 **Floating Actions:** A sleek, animated "Back to Top" widget that fades in smoothly based on scroll depth.
+- 🌌 **Deep Dark Theme:** A carefully crafted slate/slate-blue dark mode (`#0f172a`, `#1e293b`) accented with medical-grade teals and calming blues.
+- 💫 **Micro-Interactions:** Custom hover states, glowing background orbs, and seamless CSS transitions over every clickable element.
 
 ---
 
@@ -520,20 +532,27 @@ heal-connect/
 ### Phase 1: Foundation ✅
 
 - [x] Core UI/UX design
-- [x] User authentication
+- [x] User authentication (Auth Context)
 - [x] Role-based dashboards
 - [x] Consultation flow
-- [x] Mock data integration
+- [x] Progressive Web App (PWA) setup
 
-### Phase 2: Enhancement �
+### Phase 2: Cloud Integration & Tech Upgrade (Completed) ✅
 
-- [ ] Real backend API
+- [x] AWS Integration (DynamoDB for data & S3 for media)
+- [x] Advanced AI Configuration (AWS Bedrock with Gemma 2, Llama 3, Nova Lite)
+- [x] Refined AI Chat UI & Header Refactoring
+- [x] Mock data integration → Real Backend Hookup
+- [x] Advanced Admin Dashboards (Audit Logs, Emergency Monitor)
+
+### Phase 3: Enhancement 🚀
+
 - [ ] Video consultations
 - [ ] Payment gateway
 - [ ] SMS/Email notifications
 - [ ] Advanced AI diagnostics
 
-### Phase 3: Scale 📅
+### Phase 4: Scale 📅
 
 - [ ] Mobile app (React Native)
 - [ ] Multi-language support

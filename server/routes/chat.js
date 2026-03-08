@@ -1,5 +1,5 @@
 import express from 'express';
-import { PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
+import { PutCommand, QueryCommand, DeleteCommand } from "@aws-sdk/lib-dynamodb";
 import { docClient, DYNAMO_TABLE } from '../config/aws.js';
 
 const router = express.Router();
@@ -31,7 +31,7 @@ router.post('/session', async (req, res) => {
       sessionTitle: sessionTitle || autoTitle,
       messages,
       triageResult: triageResult || null,
-      createdAt: isNew ? new Date().toISOString() : undefined,
+      createdAt: req.body.createdAt || (isNew ? new Date().toISOString() : undefined),
       updatedAt: new Date().toISOString(),
     };
 
@@ -94,6 +94,31 @@ router.get('/sessions/:patientId', async (req, res) => {
   } catch (err) {
     console.error('Fetch Chat Sessions Error:', err);
     res.status(500).json({ error: 'Failed to fetch chat sessions', details: err.message });
+  }
+});
+
+// Delete a chat session
+// DELETE /api/chat/session/:patientId/:sessionId
+router.delete('/session/:patientId/:sessionId', async (req, res) => {
+  try {
+    const { patientId, sessionId } = req.params;
+
+    if (!patientId || !sessionId) {
+      return res.status(400).json({ error: 'patientId and sessionId are required' });
+    }
+
+    await docClient.send(new DeleteCommand({
+      TableName: DYNAMO_TABLE,
+      Key: {
+        pk: `CHAT#${patientId}`,
+        sk: sessionId,
+      },
+    }));
+
+    res.json({ message: 'Chat session deleted successfully' });
+  } catch (err) {
+    console.error('Delete Chat Session Error:', err);
+    res.status(500).json({ error: 'Failed to delete chat session', details: err.message });
   }
 });
 

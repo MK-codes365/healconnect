@@ -1,96 +1,184 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaPaperPlane } from 'react-icons/fa';
+import { FaArrowLeft, FaPaperPlane, FaUserCircle, FaCircle } from 'react-icons/fa';
+import { api } from '../../../api';
+import { useAuth } from '../../../context/AuthContext';
 import './DoctorMessaging.css';
+
 const DoctorMessaging = () => {
     const navigate = useNavigate();
-    const [selectedPatient, setSelectedPatient] = useState('P001');
+    const { user } = useAuth();
+    const [patients, setPatients] = useState([]);
+    const [selectedPatientId, setSelectedPatientId] = useState(null);
     const [message, setMessage] = useState('');
-    const [messages, setMessages] = useState({
-        P001: [
-            { sender: 'patient', text: 'Hello Doctor, I have a question about my prescription.', time: '10:30 AM' },
-            { sender: 'doctor', text: 'Of course! What would you like to know?', time: '10:35 AM' }
-        ],
-        P002: [
-            { sender: 'patient', text: 'When should I take the medication?', time: '11:00 AM' }
-        ]
-    });
-    const patients = [
-        { id: 'P001', name: 'Rajesh Kumar', unread: 0 },
-        { id: 'P002', name: 'Sunita Devi', unread: 1 }
-    ];
-    const handleSend = () => {
-        if (!message.trim()) return;
-        const newMessage = {
-            sender: 'doctor',
-            text: message,
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    const [messages, setMessages] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const scrollRef = useRef(null);
+
+    // 1. Fetch patients (from cases)
+    useEffect(() => {
+        const fetchPatients = async () => {
+            try {
+                const cases = await api.getCases();
+                // Get unique patients from cases
+                const uniquePatients = Array.from(new Set(cases.map(c => c.patientId)))
+                    .map(id => {
+                        const firstCase = cases.find(c => c.patientId === id);
+                        return {
+                            id: id,
+                            name: firstCase.patientName || id.split('@')[0],
+                            lastActive: firstCase.submittedAt
+                        };
+                    });
+                setPatients(uniquePatients);
+                if (uniquePatients.length > 0 && !selectedPatientId) {
+                    setSelectedPatientId(uniquePatients[0].id);
+                }
+            } catch (err) {
+                console.error("Error fetching patients:", err);
+            } finally {
+                setLoading(false);
+            }
         };
-        setMessages(prev => ({
-            ...prev,
-            [selectedPatient]: [...(prev[selectedPatient] || []), newMessage]
-        }));
-        setMessage('');
+        fetchPatients();
+    }, []);
+
+    // 2. Poll for messages
+    useEffect(() => {
+        if (!selectedPatientId || !user?.id && !user?.email) return;
+
+        const doctorId = user.id || user.email;
+        const fetchMessages = async () => {
+            try {
+                const data = await api.getMessages(selectedPatientId, doctorId);
+                setMessages(data);
+            } catch (err) {
+                console.error("Error fetching messages:", err);
+            }
+        };
+
+        fetchMessages();
+        const interval = setInterval(fetchMessages, 3000);
+        return () => clearInterval(interval);
+    }, [selectedPatientId, user]);
+
+    // 3. Scroll to bottom
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
+
+    const handleSend = async () => {
+        if (!message.trim() || !selectedPatientId || !user) return;
+
+        const doctorId = user.id || user.email;
+        const messageData = {
+            senderId: doctorId,
+            receiverId: selectedPatientId,
+            text: message,
+            timestamp: Date.now()
+        };
+
+        try {
+            await api.sendMessage(messageData);
+            setMessages(prev => [...prev, messageData]);
+            setMessage('');
+        } catch (err) {
+            console.error("Send error:", err);
+            alert("Failed to send message.");
+        }
     };
-    const currentMessages = messages[selectedPatient] || [];
-    const currentPatient = patients.find(p => p.id === selectedPatient);
+
+    const currentPatient = patients.find(p => p.id === selectedPatientId);
+
+    if (loading) return <div className="loading-state">Syncing secure channel...</div>;
+
     return (
-        <div className="doctor-messaging-container">
-            <div className="messaging-header">
+        <div className="doctor-messaging-container animate-fade-in">
+            <div className="messaging-header glass-nav">
                 <button onClick={() => navigate('/dashboard/doctor')} className="back-btn">
-                    <FaArrowLeft /> Back
+                    <FaArrowLeft /> Dashboard
                 </button>
-                <h2>Patient Messages</h2>
-            </div>
-            <div className="messaging-layout">
-                <div className="patients-list">
-                    <h3>Patients</h3>
-                    {patients.map(patient => (
-                        <div
-                            key={patient.id}
-                            className={`patient-item ${selectedPatient === patient.id ? 'active' : ''}`}
-                            onClick={() => setSelectedPatient(patient.id)}
-                        >
-                            <div className="patient-avatar">{patient.name[0]}</div>
-                            <div className="patient-info">
-                                <p className="patient-name">{patient.name}</p>
-                                <p className="patient-id">{patient.id}</p>
-                            </div>
-                            {patient.unread > 0 && (
-                                <span className="unread-badge">{patient.unread}</span>
-                            )}
-                        </div>
-                    ))}
+                <div className="header-info">
+                    <h2>Clinical Messaging Portal</h2>
+                    <span className="sync-status"><FaCircle className="pulse-dot" /> Live Sync Active</span>
                 </div>
-                <div className="chat-area">
-                    <div className="chat-header">
-                        <h3>{currentPatient?.name}</h3>
-                    </div>
-                    <div className="messages-list">
-                        {currentMessages.map((msg, index) => (
-                            <div key={index} className={`message ${msg.sender}`}>
-                                <div className="message-content">
-                                    <p>{msg.text}</p>
-                                    <span className="message-time">{msg.time}</span>
+            </div>
+
+            <div className="messaging-layout">
+                <div className="patients-list glass-card">
+                    <div className="list-title">Active Consultations</div>
+                    <div className="patients-scroll">
+                        {patients.map(patient => (
+                            <div
+                                key={patient.id}
+                                className={`patient-item ${selectedPatientId === patient.id ? 'active' : ''}`}
+                                onClick={() => setSelectedPatientId(patient.id)}
+                            >
+                                <div className="patient-avatar">
+                                    <FaUserCircle />
+                                </div>
+                                <div className="patient-info">
+                                    <p className="patient-name">{patient.name}</p>
+                                    <p className="patient-id">ID: {patient.id.substring(0, 8)}...</p>
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <div className="message-input">
-                        <input
-                            type="text"
-                            placeholder="Type your message..."
-                            value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                            onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                        />
-                        <button onClick={handleSend}>
-                            <FaPaperPlane />
-                        </button>
-                    </div>
+                </div>
+
+                <div className="chat-area glass-card">
+                    {selectedPatientId ? (
+                        <>
+                            <div className="chat-header">
+                                <div className="active-patient">
+                                    <FaUserCircle className="header-avatar" />
+                                    <div>
+                                        <h3>{currentPatient?.name}</h3>
+                                        <p>Secure Peer-to-Peer Tunnel</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="messages-list">
+                                {messages.map((msg, index) => {
+                                    const isDoctor = msg.senderId === (user.id || user.email);
+                                    return (
+                                        <div key={index} className={`message-wrapper ${isDoctor ? 'doctor' : 'patient'}`}>
+                                            <div className="message-content">
+                                                <p>{msg.text}</p>
+                                                <span className="message-time">
+                                                    {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                                <div ref={scrollRef} />
+                            </div>
+
+                            <div className="message-input-area">
+                                <input
+                                    type="text"
+                                    placeholder="Type clinical advice or follow-up instructions..."
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                                />
+                                <button onClick={handleSend} disabled={!message.trim()} className="send-btn">
+                                    <FaPaperPlane />
+                                </button>
+                            </div>
+                        </>
+                    ) : (
+                        <div className="no-selection">
+                            <FaUserCircle className="large-icon" />
+                            <p>Select a patient to begin clinical correspondence.</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
     );
 };
+
 export default DoctorMessaging;

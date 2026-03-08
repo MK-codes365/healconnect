@@ -65,6 +65,9 @@ const DoctorDashboard = () => {
                     <span className="status-indicator">Cloud Portal Active</span>
                 </div>
                 <div className="header-actions">
+                    <button onClick={() => navigate('/dashboard/doctor/profile')} className="action-nav-btn">
+                        My Profile
+                    </button>
                     <button onClick={logout} className="logout-btn">Logout</button>
                 </div>
             </div>

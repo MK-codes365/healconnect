@@ -1,1 +1,67 @@
-import React from 'react';import {     FaCommentMedical,     FaStethoscope,     FaVideo,     FaFilePrescription,     FaShippingFast,    FaAngleRight } from 'react-icons/fa';import './HowItWorks.css';const steps = [    {        icon: <FaCommentMedical />,        title: "Report Symptoms",        desc: "Describe your condition to our multilingual AI Health Assistant."    },    {        icon: <FaStethoscope />,        title: "Smart Triage",        desc: "Get instant urgency matching & specialist recommendation."    },    {        icon: <FaVideo />,        title: "Instant Consult",        desc: "Connect via video with the right doctor in minutes."    },    {        icon: <FaFilePrescription />,        title: "Digital Rx",        desc: "Receive a secure, digital prescription immediately after the call."    },    {        icon: <FaShippingFast />,        title: "Order Meds",        desc: "One-click ordering from trusted pharmacies delivered to your door."    }];const HowItWorks = () => {    return (        <section className="how-it-works-section">            <div className="container">                <h2 className="section-title">How It Works</h2>                <div className="timeline-container">                    {steps.map((step, index) => (                        <React.Fragment key={index}>                            <div className="timeline-item">                                <div className="step-icon">                                    {step.icon}                                    <span className="step-badge">{index + 1}</span>                                </div>                                <div className="timeline-content">                                    <h3>{step.title}</h3>                                    <p>{step.desc}</p>                                </div>                            </div>                            {index < steps.length - 1 && (                                <div className="arrow-connector">                                    <FaAngleRight />                                </div>                            )}                        </React.Fragment>                    ))}                </div>            </div>        </section>    );};export default HowItWorks;
+import React from 'react';
+import { FaCommentMedical, FaStethoscope, FaVideo, FaFilePrescription, FaShippingFast, FaAngleRight } from 'react-icons/fa';
+import Tilt from 'react-parallax-tilt';
+import './HowItWorks.css';
+
+const steps = [
+    {
+        icon: <FaCommentMedical />,
+        title: "Report Symptoms",
+        desc: "Describe your condition to our multilingual AI Health Assistant."
+    },
+    {
+        icon: <FaStethoscope />,
+        title: "Smart Triage",
+        desc: "Get instant urgency matching & specialist recommendation."
+    },
+    {
+        icon: <FaVideo />,
+        title: "Instant Consult",
+        desc: "Connect via video with the right doctor in minutes."
+    },
+    {
+        icon: <FaFilePrescription />,
+        title: "Digital Rx",
+        desc: "Receive a secure, digital prescription immediately after the call."
+    },
+    {
+        icon: <FaShippingFast />,
+        title: "Order Meds",
+        desc: "One-click ordering from trusted pharmacies delivered to your door."
+    }
+];
+
+const HowItWorks = () => {
+    return (
+        <section className="how-it-works-section">
+            <div className="container">
+                <h2 className="section-title">How It Works</h2>
+                <div className="timeline-container">
+                    {steps.map((step, index) => (
+                        <React.Fragment key={index}>
+                            <Tilt tiltMaxAngleX={10} tiltMaxAngleY={10} scale={1.05} transitionSpeed={400} glareEnable={true} glareMaxOpacity={0.15} glareColor="#38bdf8" glarePosition="all" className="timeline-item-wrap">
+                                <div className="timeline-item">
+                                    <div className="step-icon">
+                                        {step.icon}
+                                        <span className="step-badge">{index + 1}</span>
+                                    </div>
+                                    <div className="timeline-content">
+                                        <h3>{step.title}</h3>
+                                        <p>{step.desc}</p>
+                                    </div>
+                                </div>
+                            </Tilt>
+                            {index < steps.length - 1 && (
+                                <div className="arrow-connector">
+                                    <FaAngleRight />
+                                </div>
+                            )}
+                        </React.Fragment>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default HowItWorks;

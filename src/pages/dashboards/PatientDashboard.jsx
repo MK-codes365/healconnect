@@ -31,6 +31,15 @@ const DASHBOARD_FEATURES = [
         path: '/dashboard/patient/book',
         color: '#f59e0b',
         gradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)'
+    },
+    {
+        id: 'profile',
+        title: 'My Profile',
+        desc: 'Health records & profile',
+        icon: FaUserMd,
+        path: '/dashboard/patient/profile',
+        color: '#3b82f6',
+        gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)'
     }
 ];
 

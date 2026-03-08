@@ -1,12 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { 
-    FaUserLock, 
-    FaRobot, 
-    FaUserMd, 
-    FaVideo, 
-    FaHeartbeat, 
-    FaFilePrescription 
-} from 'react-icons/fa';
+import { FaUserLock, FaRobot, FaUserMd, FaVideo, FaHeartbeat, FaFilePrescription } from 'react-icons/fa';
+import Tilt from 'react-parallax-tilt';
 import './KeyFeatures.css';
 
 const features = [
@@ -19,63 +13,39 @@ const features = [
 ];
 
 const Feature3DCard = ({ feature, index, isVisible }) => {
-    const cardRef = useRef(null);
-    const [tilt, setTilt] = useState({ x: 0, y: 0 });
-    const [glowPos, setGlowPos] = useState({ x: 50, y: 50 });
-    const [isHovered, setIsHovered] = useState(false);
-
-    const handleMouseMove = (e) => {
-        const card = cardRef.current;
-        if (!card) return;
-        const rect = card.getBoundingClientRect();
-        const cx = rect.width / 2;
-        const cy = rect.height / 2;
-        const mx = e.clientX - rect.left - cx;
-        const my = e.clientY - rect.top - cy;
-        setTilt({ x: (my / cy) * 12, y: -(mx / cx) * 12 });
-        setGlowPos({
-            x: ((e.clientX - rect.left) / rect.width) * 100,
-            y: ((e.clientY - rect.top) / rect.height) * 100,
-        });
-    };
-
-    const handleMouseLeave = () => {
-        setTilt({ x: 0, y: 0 });
-        setIsHovered(false);
-    };
-
     return (
-        <div
-            ref={cardRef}
-            className={`feature-card-3d ${isVisible ? 'animate-up' : ''}`}
-            style={{
-                transitionDelay: `${index * 100}ms`,
-                transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) ${isHovered ? 'translateZ(20px)' : 'translateZ(0)'}`,
-                '--card-color': feature.color,
-                '--glow-x': `${glowPos.x}%`,
-                '--glow-y': `${glowPos.y}%`,
-            }}
-            onMouseMove={handleMouseMove}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={handleMouseLeave}
+        <Tilt 
+            tiltMaxAngleX={15} 
+            tiltMaxAngleY={15} 
+            scale={1.02} 
+            transitionSpeed={500} 
+            glareEnable={true} 
+            glareMaxOpacity={0.2} 
+            glareColor={feature.color} 
+            glarePosition="all"
         >
-            {/* Spotlight glow that follows cursor */}
-            <div className="card-spotlight" style={{ opacity: isHovered ? 1 : 0 }} />
+            <div
+                className={`feature-card-3d ${isVisible ? 'animate-up' : ''}`}
+                style={{
+                    transitionDelay: `${index * 100}ms`,
+                    '--card-color': feature.color,
+                }}
+            >
+                {/* Top border glow line */}
+                <div className="card-top-line" style={{ background: feature.color }} />
 
-            {/* Top border glow line */}
-            <div className="card-top-line" style={{ background: feature.color }} />
+                <div className="feature-icon-wrapper-3d" style={{ borderColor: feature.color, color: feature.color }}>
+                    {feature.icon}
+                    <div className="icon-glow" style={{ background: feature.color }} />
+                </div>
 
-            <div className="feature-icon-wrapper-3d" style={{ borderColor: feature.color, color: feature.color }}>
-                {feature.icon}
-                <div className="icon-glow" style={{ background: feature.color }} />
+                <h3>{feature.title}</h3>
+                <p>{feature.description}</p>
+
+                {/* Corner accent */}
+                <div className="card-corner-accent" style={{ borderColor: feature.color }} />
             </div>
-
-            <h3>{feature.title}</h3>
-            <p>{feature.description}</p>
-
-            {/* Corner accent */}
-            <div className="card-corner-accent" style={{ borderColor: feature.color }} />
-        </div>
+        </Tilt>
     );
 };
 

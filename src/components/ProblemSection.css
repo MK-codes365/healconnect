@@ -1,1 +1,55 @@
-.problem-section {    padding: 5rem 2rem;    background-color: #1e293b;    text-align: center;}.container {    max-width: 1200px;    margin: 0 auto;}.section-title {    font-size: 2.5rem;    margin-bottom: 2rem;    color: #f1f5f9;}.problem-statement {    font-size: 1.5rem;    color: #cbd5e1;    max-width: 800px;    margin: 0 auto 4rem auto;    font-style: italic;    line-height: 1.6;}.problem-cards {    display: flex;    justify-content: center;    gap: 2rem;    flex-wrap: wrap;}.problem-card {    background: #334155;    padding: 2.5rem;    border-radius: 16px;    flex: 1;    min-width: 250px;    max-width: 350px;    transition: transform 0.3s ease;    border: 1px solid #475569;}.problem-card:hover {    transform: translateY(-10px);    background: #475569;}.problem-icon {    font-size: 3rem;    color: #f87171;    margin-bottom: 1.5rem;}.problem-card h3 {    margin-bottom: 1rem;    color: #f1f5f9;    font-size: 1.25rem;}.problem-card p {    color: #94a3b8;}
+.problem-section {
+    padding: 5rem 2rem;
+    background-color: #1e293b;
+    text-align: center;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #f1f5f9;
+}
+.problem-statement {
+    font-size: 1.5rem;
+    color: #cbd5e1;
+    max-width: 800px;
+    margin: 0 auto 4rem auto;
+    font-style: italic;
+    line-height: 1.6;
+}
+.problem-cards {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+.problem-card {
+    background: #334155;
+    padding: 2.5rem;
+    border-radius: 16px;
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
+    transition: transform 0.3s ease;
+    border: 1px solid #475569;
+}
+.problem-card:hover {
+    transform: translateY(-10px);
+    background: #475569;
+}
+.problem-icon {
+    font-size: 2.5rem;
+    color: #f87171;
+    margin-bottom: 1.5rem;
+}
+.problem-card h3 {
+    margin-bottom: 1rem;
+    color: #f1f5f9;
+    font-size: 1.25rem;
+}
+.problem-card p {
+    color: #94a3b8;
+}

@@ -1,31 +1,27 @@
 .case-detail-page {
     min-height: 100vh;
-    background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+    background: #0f172a;
     color: #f1f5f9;
     padding: 2.5rem 2rem;
     max-width: 1400px;
     margin: 0 auto;
+    font-family: 'Inter', sans-serif;
 }
 
 .case-detail-layout {
     display: grid;
-    grid-template-columns: 1fr 400px;
+    grid-template-columns: 1fr 420px;
     gap: 3rem;
 }
 
-.clinical-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-bottom: 3rem;
-}
-
-.glass-nav {
+.solid-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1.5rem 2.5rem;
     margin-bottom: 3.5rem;
+    background: #1e293b;
+    border: 1px solid #334155;
     border-radius: 20px;
 }
 
@@ -33,31 +29,53 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #94a3b8;
     padding: 0.8rem 1.5rem;
     border-radius: 12px;
     cursor: pointer;
     font-weight: 700;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .back-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #1e293b;
+    color: white;
     transform: translateX(-5px);
 }
 
 .header-titles h2 {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 800;
     line-height: 1;
+    color: white;
+    margin: 0;
 }
 
 .case-id {
+    display: block;
+    margin-top: 0.5rem;
     font-size: 0.85rem;
     font-family: 'JetBrains Mono', monospace;
-    opacity: 0.6;
+    color: #64748b;
+    font-weight: 600;
+}
+
+/* Clinical Grid & Cards */
+.clinical-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.solid-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
@@ -66,10 +84,11 @@
     gap: 1rem;
     margin-bottom: 2rem;
     font-size: 1.25rem;
-    color: #3b82f6;
+    color: #10a37f;
+    font-weight: 800;
 }
 
-.patient-master-card .info-grid {
+.info-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
@@ -78,103 +97,107 @@
 .info-node label {
     display: block;
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 800;
     color: #64748b;
     text-transform: uppercase;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
 }
 
 .info-node p {
-    font-size: 1.15rem;
-    font-weight: 600;
+    font-size: 1.1rem;
+    font-weight: 700;
     color: white;
+    margin: 0;
 }
 
+/* AI Assessment Specifics */
 .ai-assessment-card {
-    position: relative;
-    overflow: hidden;
+    border-left: 6px solid #3b82f6;
 }
 
-.ai-assessment-card.urgency-emergency { border-color: rgba(239, 68, 68, 0.3); }
-.ai-assessment-card.urgency-emergency .urgency-glow {
-    position: absolute;
-    top: 0; right: 0;
-    width: 100px; height: 100px;
-    background: radial-gradient(circle, rgba(239, 68, 68, 0.1) 0%, transparent 70%);
+.urgency-emergency {
+    border-left-color: #ef4444;
 }
 
 .urgency-status {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    background: #0f172a;
+    padding: 1.25rem;
+    border-radius: 16px;
+    border: 1px solid #334155;
 }
 
 .urgency-status .badge {
-    padding: 0.4rem 1rem;
-    background: #3b82f6;
-    border-radius: 10px;
-    font-size: 0.8rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 100px;
+    font-size: 0.75rem;
     font-weight: 800;
     color: white;
+    text-transform: uppercase;
 }
 
-.urgency-emergency .badge { background: #ef4444; }
+.badge.HIGH, .badge.EMERGENCY { background: #ef4444; }
+.badge.MEDIUM, .badge.CONSULT { background: #f59e0b; }
+.badge.NORMAL, .badge.LOW { background: #10a37f; }
 
-.label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #64748b;
-    margin-bottom: 1rem;
-}
-
-.symptoms-section { margin-bottom: 25px; }
-.tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.symptoms-section { margin-bottom: 2rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 .tag {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.4rem 0.8rem;
-    border-radius: 8px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    padding: 0.45rem 1rem;
+    border-radius: 100px;
     font-size: 0.85rem;
+    color: #cbd5e1;
+    font-weight: 600;
 }
 
+/* Transcript Area */
 .transcript-viewport {
-    height: 600px;
+    height: 550px;
     overflow-y: auto;
-    padding: 2rem;
-    background: rgba(15, 23, 42, 0.3);
-    border-radius: 20px;
+    padding: 2.5rem;
+    background: #0f172a;
+    border-radius: 24px;
+    border: 1px solid #334155;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .transcript-bubble {
-    max-width: 80%;
-    padding: 1.5rem;
+    max-width: 85%;
+    padding: 1.75rem;
     border-radius: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .transcript-bubble.ai {
     align-self: flex-start;
-    background: rgba(59, 130, 246, 0.1);
-    border-left: 4px solid #3b82f6;
+    background: #1e293b;
+    border-left: 5px solid #10a37f;
 }
 
 .transcript-bubble.user {
     align-self: flex-end;
-    background: rgba(255, 255, 255, 0.05);
-    border-right: 4px solid rgba(255, 255, 255, 0.2);
+    background: #334155;
+    border-radius: 20px 20px 4px 20px;
 }
 
 .bubble-header {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 800;
     text-transform: uppercase;
-    color: #64748b;
-    margin-bottom: 0.75rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
 }
 
+/* Sidebar Console */
 .notes-console {
     position: sticky;
     top: 2rem;
@@ -185,23 +208,27 @@
 
 .clinical-textarea {
     flex: 1;
-    background: rgba(15, 23, 42, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 1.5rem;
+    background: #1e293b;
+    border: 2px solid #334155;
+    border-radius: 20px;
+    padding: 2rem;
     color: white;
     font-size: 1.1rem;
     line-height: 1.6;
     resize: none;
     margin: 2rem 0;
     outline: none;
+    transition: all 0.3s ease;
 }
 
-.clinical-textarea:focus { border-color: #3b82f6; }
+.clinical-textarea:focus {
+    border-color: #10a37f;
+    background: #020617;
+}
 
 .console-actions {
     display: grid;
-    gap: 1rem;
+    gap: 1.25rem;
 }
 
 .tele-btn, .presc-btn {
@@ -214,25 +241,32 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    transition: 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tele-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #10a37f;
+}
+
+.tele-btn:hover {
+    background: #334155;
     color: white;
+    transform: translateY(-3px);
 }
 
 .presc-btn {
-    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    background: #10a37f;
     border: none;
     color: white;
-    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 10px 15px -3px rgba(16, 163, 127, 0.3);
 }
 
 .presc-btn:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
+    background: #0d8a6a;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px -5px rgba(16, 163, 127, 0.4);
 }
 
 @media (max-width: 1200px) {

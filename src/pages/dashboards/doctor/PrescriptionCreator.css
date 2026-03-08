@@ -1,10 +1,11 @@
 .prescription-console-page {
     min-height: 100vh;
-    background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+    background: #0f172a;
     color: #f1f5f9;
     padding: 2.5rem 2rem;
     max-width: 1400px;
     margin: 0 auto;
+    font-family: 'Inter', sans-serif;
 }
 
 .console-content {
@@ -16,8 +17,11 @@
 .prescription-workspace {
     width: 100%;
     max-width: 1000px;
-    padding: 3.5rem;
-    border-radius: 40px;
+    padding: 4rem;
+    border-radius: 32px;
+    background: #1e293b; /* Solid Card */
+    border: 1px solid #334155;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
 }
 
 .workspace-header {
@@ -26,21 +30,24 @@
     gap: 3rem;
     padding-bottom: 3rem;
     margin-bottom: 3.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid #334155;
 }
 
 .patient-meta label, .date-meta label {
     display: block;
     font-size: 0.8rem;
-    font-weight: 700;
+    font-weight: 800;
     color: #64748b;
     text-transform: uppercase;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
 }
 
 .patient-meta h4, .date-meta h4 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 800;
+    color: white;
+    margin: 0;
 }
 
 .entry-section {
@@ -51,117 +58,153 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 
 .section-title h3 {
-    font-size: 1.25rem;
-    color: #3b82f6;
+    font-size: 1.35rem;
+    color: #10a37f;
     display: flex;
     align-items: center;
     gap: 1rem;
+    font-weight: 800;
 }
 
 .add-node-btn {
-    padding: 0.6rem 1.2rem;
-    background: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.2);
-    color: #60a5fa;
+    padding: 0.75rem 1.5rem;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #10a37f;
     border-radius: 12px;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
-.add-node-btn:hover { background: rgba(59, 130, 246, 0.2); }
+.add-node-btn:hover {
+    background: #10a37f;
+    color: white;
+    transform: translateY(-2px);
+}
 
 .medicine-table .table-header {
     display: grid;
     grid-template-columns: 2fr 1.2fr 1.2fr 2fr 50px;
     gap: 1.5rem;
-    padding: 1rem;
-    font-size: 0.75rem;
+    padding: 1.25rem;
+    font-size: 0.8rem;
     font-weight: 800;
     color: #64748b;
     text-transform: uppercase;
+    background: #0f172a;
+    border-radius: 12px 12px 0 0;
+    border: 1px solid #334155;
+    border-bottom: none;
 }
 
 .medicine-row {
     display: grid;
-    grid-template-columns: 2fr 1.2fr 1.2fr 2fr 50px;
-    gap: 1.5rem;
+    grid-template-columns: 2fr 1.2fr 1.2fr 2fr 40px;
+    gap: 1rem;
     margin-bottom: 1rem;
+    background: #0f172a;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    align-items: center;
 }
 
 .medicine-row input {
-    background: rgba(15, 23, 42, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    padding: 1rem;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
     color: white;
     font-size: 0.95rem;
     outline: none;
+    transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.medicine-row input:focus { border-color: #3b82f6; }
+.medicine-row input:focus {
+    border-color: #10a37f;
+    background: #020617;
+}
 
 .row-remove {
     background: none;
     border: none;
     color: #ef4444;
     cursor: pointer;
-    opacity: 0.6;
-    transition: 0.3s;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
 }
 
-.row-remove:hover:not(:disabled) { opacity: 1; transform: scale(1.1); }
+.row-remove:hover:not(:disabled) { transform: scale(1.2); color: #dc2626; }
 
 .tests-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 1.5rem;
 }
 
 .test-node {
     display: flex;
     gap: 1rem;
+    background: #0f172a;
+    padding: 1rem;
+    border-radius: 16px;
+    border: 1px solid #334155;
 }
 
 .test-node input {
     flex: 1;
-    background: rgba(15, 23, 42, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
     padding: 1rem;
     color: white;
+    outline: none;
 }
 
 .workspace-textarea {
     width: 100%;
-    background: rgba(15, 23, 42, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: #0f172a;
+    border: 1px solid #334155;
     border-radius: 20px;
-    padding: 1.5rem;
+    padding: 2rem;
     color: white;
     font-size: 1.1rem;
     resize: none;
     margin-top: 1.5rem;
+    outline: none;
+    min-height: 150px;
+    line-height: 1.6;
 }
+
+.workspace-textarea:focus { border-color: #10a37f; }
 
 .workspace-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 4rem;
-    padding-top: 2.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 3rem;
+    border-top: 1px solid #334155;
 }
 
 .security-notice {
     font-size: 0.9rem;
-    color: #10b981;
-    font-weight: 700;
+    color: #10a37f;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .footer-actions {
@@ -170,71 +213,89 @@
 }
 
 .secondary-btn {
-    padding: 1rem 2rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
+    padding: 1.25rem 2.5rem;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #94a3b8;
     border-radius: 16px;
     font-weight: 700;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
+.secondary-btn:hover { background: #1e293b; color: white; }
+
 .primary-btn {
-    padding: 1rem 2.5rem;
-    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    padding: 1.25rem 3rem;
+    background: #10a37f;
     border: none;
     color: white;
     border-radius: 16px;
     font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 10px 15px -3px rgba(16, 163, 127, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.primary-btn:hover {
+    background: #0d8a6a;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px -5px rgba(16, 163, 127, 0.4);
 }
 
 /* Success State */
 .prescription-success-page {
-    height: 80vh;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #0f172a !important; /* Force solid dark background */
+    width: 100%;
 }
 
 .success-container {
     text-align: center;
     padding: 5rem 4rem;
     max-width: 600px;
+    background: #1e293b !important; /* Force dark background */
+    border: 1px solid #334155 !important;
     border-radius: 40px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
 .success-icon-wrap {
-    width: 100px;
-    height: 100px;
-    background: rgba(16, 185, 129, 0.1);
+    width: 120px;
+    height: 120px;
+    background: rgba(16, 163, 127, 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 2.5rem;
-    color: #10b981;
-    font-size: 3rem;
-    box-shadow: 0 0 40px rgba(16, 185, 129, 0.2);
+    margin: 0 auto 3rem;
+    color: #10a37f;
+    font-size: 4rem;
+    border: 3px solid rgba(16, 163, 127, 0.2);
 }
 
 .success-container h2 {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     font-weight: 800;
     margin-bottom: 1.5rem;
+    color: white;
 }
 
 .success-container p {
     color: #94a3b8;
-    line-height: 1.7;
-    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
 }
 
 .redirect-hint {
-    color: #3b82f6;
-    font-weight: 700;
-    animation: pulse 2s infinite;
+    color: #10a37f;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
 
 @media (max-width: 968px) {
@@ -242,4 +303,5 @@
     .medicine-row { grid-template-columns: 1fr; gap: 0.75rem; }
     .footer-actions { flex-direction: column; width: 100%; }
     .primary-btn, .secondary-btn { width: 100%; }
+    .prescription-workspace { padding: 2rem; }
 }

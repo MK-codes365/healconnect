@@ -8,6 +8,7 @@ import chatRoutes from './routes/chat.js';
 import prescriptionRoutes from './routes/prescriptions.js';
 import adminRoutes from './routes/admin.js';
 import doctorRoutes from './routes/doctors.js';
+import messagingRoutes from './routes/messaging.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -29,6 +30,7 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/prescriptions', prescriptionRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/doctors', doctorRoutes);
+app.use('/api/messaging', messagingRoutes);
 
 app.get('/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
