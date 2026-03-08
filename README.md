@@ -1,7 +1,7 @@
 <div align="center">
 
 <img width="150" height="150" alt="logo" src="https://github.com/user-attachments/assets/6aec885e-d1f7-4987-803c-c93a4c92666b" />
- 
+
 
 # 🏥 Heal Connect
 
@@ -52,9 +52,11 @@
 **Heal Connect** is a comprehensive AI-powered telemedicine platform designed to revolutionize healthcare delivery in rural and underserved areas. By connecting patients, health workers, doctors, and administrators through a unified digital ecosystem, we're making quality healthcare accessible to everyone, everywhere.
 
 ### 🎯 Our Mission
+
 Bridge the healthcare gap between urban and rural areas by leveraging technology, AI, and telemedicine to provide affordable, accessible, and quality healthcare services.
 
 ### 💡 Our Vision
+
 A world where geographical barriers don't limit access to quality healthcare, and every individual can receive timely medical attention regardless of their location.
 
 ---
@@ -62,16 +64,18 @@ A world where geographical barriers don't limit access to quality healthcare, an
 ## 🚨 Problem & Solution
 
 ### The Challenge
+
 Rural and underserved communities face critical healthcare barriers:
 
-| Challenge | Impact |
-|-----------|--------|
-| 🏥 **Limited Access** | Remote locations with no nearby hospitals |
-| 👨‍⚕️ **Doctor Shortage** | 1 doctor per 10,000+ people in rural areas |
-| ⏰ **Delayed Treatment** | Late diagnosis leading to poor outcomes |
-| 💰 **High Costs** | Travel expenses + lost work days |
+| Challenge                | Impact                                     |
+| ------------------------ | ------------------------------------------ |
+| 🏥 **Limited Access**    | Remote locations with no nearby hospitals  |
+| 👨‍⚕️ **Doctor Shortage**   | 1 doctor per 10,000+ people in rural areas |
+| ⏰ **Delayed Treatment** | Late diagnosis leading to poor outcomes    |
+| 💰 **High Costs**        | Travel expenses + lost work days           |
 
 ### Our Solution
+
 A **four-tier integrated healthcare delivery system** connecting:
 
 ```
@@ -85,24 +89,28 @@ A **four-tier integrated healthcare delivery system** connecting:
 ## 🎯 Key Features
 
 ### 👤 For Patients
+
 - ✅ **AI Health Assistant** - 24/7 symptom checker & preliminary diagnosis
 - ✅ **Book Consultations** - Browse verified doctors & schedule appointments
 - ✅ **Digital Health Records** - Prescriptions, visit history, vitals tracking
 - ✅ **Secure Messaging** - Direct communication with healthcare providers
 
 ### 🏥 For Health Workers
+
 - ✅ **Patient Registration** - Onboard patients with complete profiles
 - ✅ **Vitals Collection** - Record BP, temperature, oxygen levels
 - ✅ **Case Management** - Track and manage patient cases
 - ✅ **Doctor Coordination** - Bridge communication with specialists
 
 ### 👨‍⚕️ For Doctors
+
 - ✅ **Appointment Management** - View and manage consultation schedule
 - ✅ **Teleconsultation** - Conduct video/audio consultations
 - ✅ **Prescription Creator** - Generate digital prescriptions
 - ✅ **Case Review** - Access patient history and vitals
 
 ### 👔 For Administrators
+
 - ✅ **User Management** - Manage all platform users
 - ✅ **Doctor Verification** - Verify credentials and licenses
 - ✅ **Analytics Dashboard** - Monitor platform metrics
@@ -155,6 +163,7 @@ Admin Monitoring & Analytics
 <td align="center" width="25%">
 
 ### 👤 Patient
+
 **Access healthcare from anywhere**
 
 - AI consultation
@@ -166,6 +175,7 @@ Admin Monitoring & Analytics
 <td align="center" width="25%">
 
 ### 🏥 Health Worker
+
 **First point of contact**
 
 - Register patients
@@ -177,6 +187,7 @@ Admin Monitoring & Analytics
 <td align="center" width="25%">
 
 ### 👨‍⚕️ Doctor
+
 **Provide expert care**
 
 - Review cases
@@ -188,6 +199,7 @@ Admin Monitoring & Analytics
 <td align="center" width="25%">
 
 ### 👔 Administrator
+
 **Oversee operations**
 
 - User management
@@ -207,13 +219,13 @@ Admin Monitoring & Analytics
 
 <div align="center">
 
-| Technology | Purpose | Version |
-|-----------|---------|---------|
-| ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black) | UI Framework | 19.2.0 |
-| ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white) | Build Tool | 7.2.4 |
-| ![React Router](https://img.shields.io/badge/React%20Router-CA4245?style=flat-square&logo=react-router&logoColor=white) | Client-side Routing | 7.10.1 |
-| ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) | Programming Language | ES6+ |
-| ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) | Styling & Animations | Latest |
+| Technology                                                                                                              | Purpose              | Version |
+| ----------------------------------------------------------------------------------------------------------------------- | -------------------- | ------- |
+| ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)                        | UI Framework         | 19.2.0  |
+| ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)                           | Build Tool           | 7.2.4   |
+| ![React Router](https://img.shields.io/badge/React%20Router-CA4245?style=flat-square&logo=react-router&logoColor=white) | Client-side Routing  | 7.10.1  |
+| ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)         | Programming Language | ES6+    |
+| ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)                           | Styling & Animations | Latest  |
 
 </div>
 
@@ -221,13 +233,13 @@ Admin Monitoring & Analytics
 
 <div align="center">
 
-| Technology | Purpose |
-|-----------|---------|
-| ![AWS Bedrock](https://img.shields.io/badge/AWS%20Bedrock-FF9900?style=flat-square&logo=amazon-aws&logoColor=white) | Managed AI/ML Service |
-| ![Nova](https://img.shields.io/badge/Nova%20Model-4B8BBE?style=flat-square&logo=openai&logoColor=white) | Advanced LLM for Medical Insights |
-| ![AWS IAM](https://img.shields.io/badge/AWS%20IAM-FF9900?style=flat-square&logo=amazon-aws&logoColor=white) | Secure Authentication |
-| ![AWS Lambda](https://img.shields.io/badge/AWS%20Lambda-FF9900?style=flat-square&logo=amazon-aws&logoColor=white) | Serverless Computing |
-| ![DynamoDB](https://img.shields.io/badge/DynamoDB-527FFF?style=flat-square&logo=amazon-dynamodb&logoColor=white) | NoSQL Database |
+| Technology                                                                                                          | Purpose                           |
+| ------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| ![AWS Bedrock](https://img.shields.io/badge/AWS%20Bedrock-FF9900?style=flat-square&logo=amazon-aws&logoColor=white) | Managed AI/ML Service             |
+| ![Nova](https://img.shields.io/badge/Nova%20Model-4B8BBE?style=flat-square&logo=openai&logoColor=white)             | Advanced LLM for Medical Insights |
+| ![AWS IAM](https://img.shields.io/badge/AWS%20IAM-FF9900?style=flat-square&logo=amazon-aws&logoColor=white)         | Secure Authentication             |
+| ![AWS Lambda](https://img.shields.io/badge/AWS%20Lambda-FF9900?style=flat-square&logo=amazon-aws&logoColor=white)   | Serverless Computing              |
+| ![DynamoDB](https://img.shields.io/badge/DynamoDB-527FFF?style=flat-square&logo=amazon-dynamodb&logoColor=white)    | NoSQL Database                    |
 
 </div>
 
@@ -235,11 +247,11 @@ Admin Monitoring & Analytics
 
 <div align="center">
 
-| Tool | Purpose |
-|------|---------|
-| ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=flat-square&logo=eslint&logoColor=white) | Code Quality |
-| ![npm](https://img.shields.io/badge/npm-CB3837?style=flat-square&logo=npm&logoColor=white) | Package Management |
-| ![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white) | Version Control |
+| Tool                                                                                                | Purpose            |
+| --------------------------------------------------------------------------------------------------- | ------------------ |
+| ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=flat-square&logo=eslint&logoColor=white) | Code Quality       |
+| ![npm](https://img.shields.io/badge/npm-CB3837?style=flat-square&logo=npm&logoColor=white)          | Package Management |
+| ![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white)          | Version Control    |
 | ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white) | Repository Hosting |
 
 </div>
@@ -249,29 +261,34 @@ Admin Monitoring & Analytics
 ## 🤖 AI Integration: AWS Bedrock Nova Model
 
 ### Overview
+
 Heal Connect leverages **AWS Bedrock Nova**, a state-of-the-art large language model, to power intelligent healthcare features and provide AI-driven medical insights.
 
 ### Key Capabilities
 
 #### 1. **Intelligent Symptom Analysis**
+
 - Analyzes patient symptoms using natural language processing
 - Provides preliminary medical assessments
 - Suggests relevant medical specialties
 - Generates health recommendations
 
 #### 2. **Medical Knowledge Base**
+
 - Access to comprehensive medical information
 - Evidence-based health guidance
 - Drug interaction checking
 - Disease information and prevention tips
 
 #### 3. **Patient Communication**
+
 - Natural language understanding for patient queries
 - Contextual health advice generation
 - Personalized health education
 - Multi-language support capability
 
 #### 4. **Clinical Decision Support**
+
 - Assists doctors with case analysis
 - Suggests relevant diagnostic tests
 - Provides treatment recommendations
@@ -297,14 +314,14 @@ Patient Receives Guidance
 
 ### Features Powered by Nova
 
-| Feature | Benefit |
-|---------|---------|
-| 🤖 **AI Chat Assistant** | 24/7 symptom checking & health guidance |
-| 📋 **Case Analysis** | Doctors get AI-assisted case summaries |
-| 💊 **Drug Information** | Instant drug interaction & side effect info |
-| 🔍 **Diagnostic Support** | Suggests relevant tests & investigations |
-| 📚 **Health Education** | Personalized patient education materials |
-| 🚨 **Risk Assessment** | Identifies high-risk patient conditions |
+| Feature                   | Benefit                                     |
+| ------------------------- | ------------------------------------------- |
+| 🤖 **AI Chat Assistant**  | 24/7 symptom checking & health guidance     |
+| 📋 **Case Analysis**      | Doctors get AI-assisted case summaries      |
+| 💊 **Drug Information**   | Instant drug interaction & side effect info |
+| 🔍 **Diagnostic Support** | Suggests relevant tests & investigations    |
+| 📚 **Health Education**   | Personalized patient education materials    |
+| 🚨 **Risk Assessment**    | Identifies high-risk patient conditions     |
 
 ### Security & Compliance
 
@@ -344,23 +361,26 @@ Patient Receives Guidance
 ### Use Cases
 
 #### 1. **Patient Self-Assessment**
+
 ```
 Patient: "I have fever and cough for 3 days"
-Nova: Analyzes symptoms → Suggests possible conditions → 
+Nova: Analyzes symptoms → Suggests possible conditions →
       Recommends seeing a doctor → Provides care tips
 ```
 
 #### 2. **Doctor Decision Support**
+
 ```
 Doctor: Reviews patient case with AI assistance
-Nova: Summarizes patient history → Suggests tests → 
+Nova: Summarizes patient history → Suggests tests →
       Recommends treatment options → Flags complications
 ```
 
 #### 3. **Health Worker Guidance**
+
 ```
 Health Worker: Needs guidance on patient vitals
-Nova: Interprets readings → Provides assessment → 
+Nova: Interprets readings → Provides assessment →
       Suggests next steps → Alerts for emergencies
 ```
 
@@ -415,12 +435,12 @@ npm run dev
 
 ### Demo Credentials
 
-| Role | Email | Password |
-|------|-------|----------|
-| 👤 Patient | patient@demo.com | demo123 |
-| 🏥 Health Worker | worker@demo.com | demo123 |
-| 👨‍⚕️ Doctor | doctor@demo.com | demo123 |
-| 👔 Admin | admin@demo.com | demo123 |
+| Role             | Email            | Password |
+| ---------------- | ---------------- | -------- |
+| 👤 Patient       | patient@demo.com | demo123  |
+| 🏥 Health Worker | worker@demo.com  | demo123  |
+| 👨‍⚕️ Doctor        | doctor@demo.com  | demo123  |
+| 👔 Admin         | admin@demo.com   | demo123  |
 
 ### Build for Production
 
@@ -498,6 +518,7 @@ heal-connect/
 ## 🗺️ Roadmap
 
 ### Phase 1: Foundation ✅
+
 - [x] Core UI/UX design
 - [x] User authentication
 - [x] Role-based dashboards
@@ -505,6 +526,7 @@ heal-connect/
 - [x] Mock data integration
 
 ### Phase 2: Enhancement �
+
 - [ ] Real backend API
 - [ ] Video consultations
 - [ ] Payment gateway
@@ -512,6 +534,7 @@ heal-connect/
 - [ ] Advanced AI diagnostics
 
 ### Phase 3: Scale 📅
+
 - [ ] Mobile app (React Native)
 - [ ] Multi-language support
 - [ ] Pharmacy integration
@@ -519,6 +542,7 @@ heal-connect/
 - [ ] Insurance integration
 
 ### Phase 4: Innovation 🔮
+
 - [ ] Blockchain records
 - [ ] IoT integration
 - [ ] Predictive analytics
@@ -532,6 +556,7 @@ heal-connect/
 We welcome contributions! Here's how to help:
 
 ### Ways to Contribute
+
 - 🐛 Report bugs
 - 💡 Suggest features
 - 📝 Improve documentation
@@ -554,6 +579,7 @@ git push origin feature/AmazingFeature
 ```
 
 ### Code Guidelines
+
 - Follow existing code style
 - Use meaningful names
 - Add comments for complex logic
@@ -574,12 +600,14 @@ MIT License © 2026 Heal Connect
 ## 📧 Contact & Links
 
 ### Connect With Us
+
 - 📧 **Email**: contact@healconnect.com
 - 🌐 **Website**: [healconnect.com](#)
 - 🐦 **Twitter**: [@healconnect](#)
 - 💼 **LinkedIn**: [Heal Connect](#)
 
 ### Project Links
+
 - 📦 **Repository**: [github.com/MK-codes365/healconnect](https://github.com/MK-codes365/healconnect)
 - 🐛 **Issues**: [Report a bug](https://github.com/MK-codes365/healconnect/issues)
 - 📖 **Docs**: [Documentation](#)

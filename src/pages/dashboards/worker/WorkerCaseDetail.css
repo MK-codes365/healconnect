@@ -1,0 +1,241 @@
+.worker-case-detail-page {
+    min-height: 100vh;
+    background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+    color: #f1f5f9;
+    padding: 2.5rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.case-detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 3rem;
+}
+
+.clinical-top-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.patient-master-card .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.info-node label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.info-node p {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.urgency-badge {
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.urgency-status {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.badge {
+    padding: 0.4rem 1rem;
+    background: #3b82f6;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.urgency-emergency .badge { background: #ef4444; }
+.urgency-consult .badge { background: #f59e0b; }
+.urgency-self_care .badge { background: #10b981; }
+
+.tag {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.observations-section {
+    margin-bottom: 2.5rem;
+}
+
+.obs-content {
+    background: rgba(15, 23, 42, 0.3);
+    padding: 1.5rem;
+    border-radius: 16px;
+    line-height: 1.6;
+    font-size: 1.05rem;
+    color: #cbd5e1;
+}
+
+.transcript-viewport {
+    height: 400px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: rgba(15, 23, 42, 0.3);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.transcript-bubble {
+    max-width: 85%;
+    padding: 1.25rem;
+    border-radius: 16px;
+}
+
+.transcript-bubble.ai {
+    align-self: flex-start;
+    background: rgba(59, 130, 246, 0.1);
+    border-left: 3px solid #3b82f6;
+}
+
+.transcript-bubble.user {
+    align-self: flex-end;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Sidebar Styles */
+.status-console {
+    position: sticky;
+    top: 2rem;
+}
+
+.status-timeline {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.step {
+    display: flex;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 7.5px;
+    top: 25px;
+    bottom: -25px;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.step.active:not(:last-child)::after {
+    background: #3b82f6;
+}
+
+.step .dot {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: #1e293b;
+    border: 3px solid #475569;
+    z-index: 1;
+}
+
+.step.active .dot {
+    background: #3b82f6;
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+.step-text h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.step-text p {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.doctor-resp-box {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    padding: 1.5rem;
+    border-radius: 20px;
+}
+
+.doctor-resp-box label {
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #3b82f6;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.resp-text {
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.start-chat-btn {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+.waiting-box {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    color: #64748b;
+}
+
+.waiting-box .pulse {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.4; }
+    50% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 0.4; }
+}
+
+.worker-detail-loading, .worker-detail-error {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+@media (max-width: 1200px) {
+    .case-detail-layout { grid-template-columns: 1fr; }
+    .status-console { position: relative; }
+}
+
+@media (max-width: 768px) {
+    .clinical-top-grid { grid-template-columns: 1fr; }
+}

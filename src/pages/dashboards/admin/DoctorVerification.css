@@ -1,1 +1,166 @@
-.verification-container {    min-height: 100vh;    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);    color: white;    padding: 2rem;}.verification-header {    display: flex;    align-items: center;    gap: 1rem;    margin-bottom: 2rem;}.verification-tabs {    display: flex;    gap: 1rem;    margin-bottom: 2rem;    background: rgba(30, 41, 59, 0.7);    padding: 0.5rem;    border-radius: 12px;    width: fit-content;}.verification-tabs button {    padding: 0.75rem 1.5rem;    background: transparent;    border: none;    color: #94a3b8;    border-radius: 8px;    cursor: pointer;    font-weight: 600;    transition: all 0.2s;}.verification-tabs button.active {    background: #3b82f6;    color: white;}.doctors-list {    display: flex;    flex-direction: column;    gap: 1.5rem;}.doctor-card {    background: rgba(30, 41, 59, 0.7);    padding: 2rem;    border-radius: 16px;    border: 1px solid rgba(255, 255, 255, 0.1);}.doctor-header {    display: flex;    justify-content: space-between;    align-items: flex-start;    margin-bottom: 1.5rem;}.doctor-header h3 {    margin: 0 0 0.25rem 0;}.doctor-id {    color: #94a3b8;    font-size: 0.9rem;    margin: 0;}.pending-badge,.verified-badge {    padding: 0.5rem 1rem;    border-radius: 20px;    font-size: 0.85rem;    font-weight: 700;}.pending-badge {    background: #f59e0b;    color: white;}.verified-badge {    background: #14b8a6;    color: white;}.doctor-details {    background: rgba(15, 23, 42, 0.5);    padding: 1.5rem;    border-radius: 12px;    margin-bottom: 1.5rem;}.doctor-details p {    margin: 0.5rem 0;    color: #cbd5e1;}.verification-actions {    display: flex;    gap: 1rem;}.view-btn,.approve-btn,.reject-btn {    padding: 0.75rem 1.5rem;    border: none;    border-radius: 8px;    cursor: pointer;    font-weight: 600;    display: flex;    align-items: center;    gap: 0.5rem;    transition: all 0.2s;}.view-btn {    background: #3b82f6;    color: white;}.view-btn:hover {    background: #2563eb;}.approve-btn {    background: #14b8a6;    color: white;}.approve-btn:hover {    background: #0d9488;}.reject-btn {    background: #ef4444;    color: white;}.reject-btn:hover {    background: #dc2626;}@media (max-width: 768px) {    .verification-actions {        flex-direction: column;    }}
+.verification-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: white;
+    padding: 2rem;
+}
+
+.verification-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.back-btn {
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    font-weight: 600;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(-3px);
+}
+
+.verification-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    background: rgba(30, 41, 59, 0.7);
+    padding: 0.5rem;
+    border-radius: 12px;
+    width: fit-content;
+}
+
+.verification-tabs button {
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.verification-tabs button.active {
+    background: #3b82f6;
+    color: white;
+}
+
+.doctors-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.doctor-card {
+    background: rgba(30, 41, 59, 0.7);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.doctor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.doctor-header h3 {
+    margin: 0 0 0.25rem 0;
+}
+
+.doctor-id {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.pending-badge, .verified-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.pending-badge {
+    background: #f59e0b;
+    color: white;
+}
+
+.verified-badge {
+    background: #14b8a6;
+    color: white;
+}
+
+.doctor-details {
+    background: rgba(15, 23, 42, 0.5);
+    padding: 1.5rem;    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.doctor-details p {
+    margin: 0.5rem 0;
+    color: #cbd5e1;
+}
+
+.verification-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.view-btn, .approve-btn, .reject-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+}
+
+.view-btn {
+    background: #3b82f6;
+    color: white;
+}
+
+.view-btn:hover {
+    background: #2563eb;
+}
+
+.approve-btn {
+    background: #14b8a6;
+    color: white;
+}
+
+.approve-btn:hover {
+    background: #0d9488;
+}
+
+.reject-btn {
+    background: #ef4444;
+    color: white;
+}
+
+.reject-btn:hover {
+    background: #dc2626;
+}
+
+@media (max-width: 768px) {
+    .verification-actions {
+        flex-direction: column;
+    }
+}

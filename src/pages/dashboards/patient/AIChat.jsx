@@ -88,7 +88,7 @@ const AIChat = () => {
     if (!patientId) return;
     setIsLoadingSessions(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/chat/sessions/${patientId}`);
+      const response = await fetch(`http://localhost:5000/api/chat/sessions/${encodeURIComponent(patientId)}`);
       if (response.ok) {
         const data = await response.json();
         setPastSessions(data);
@@ -317,74 +317,67 @@ const AIChat = () => {
                 {msg.sender === "ai" ? <FaRobot /> : <FaUser />}
               </div>
               <div className="message-bubble glass-card">
-                {msg.sender === "ai" ? <ReactMarkdown>{msg.text}</ReactMarkdown> : msg.text}
+                {msg.sender === "ai" ? <ReactMarkdown>{msg.text}</ReactMarkdown> : <p>{msg.text}</p>}
               </div>
             </div>
           ))}
+
           {isTyping && (
-            <div className="message ai typing">
+            <div className="message ai typing animate-fade-in">
               <div className="message-icon"><FaRobot /></div>
               <div className="message-bubble glass-card">
-                <span className="dot"></span>
-                <span className="dot"></span>
-                <span className="dot"></span>
+                <span className="dot">.</span><span className="dot">.</span><span className="dot">.</span>
               </div>
             </div>
           )}
+
           {error && (
-            <div className="error-banner glass-card">
+            <div className="error-banner glass-card animate-fade-in">
               <FaExclamationTriangle /> {error}
             </div>
           )}
+          
+          {triageResult && !isTyping && (
+            <div className={`triage-result glass-card urgency-${triageResult.urgency.toLowerCase()}`}>
+              <div className="triage-header">
+                <h3>Diagnostic Summary</h3>
+                <span className="urgency-badge">{triageResult.urgency}</span>
+              </div>
+              <div className="triage-content">
+                <div className="recommendation-section">
+                  <span className="label">Recommendation:</span>
+                  <p className="text">{triageResult.recommendation}</p>
+                </div>
+                {triageResult.urgency !== "SELF_CARE" && (
+                  <button 
+                    className="btn-primary" 
+                    onClick={() => navigate("/dashboard/patient/book", { 
+                      state: { triageData: triageResult } 
+                    })}
+                  >
+                    Consult with {triageResult.specialty}
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+
           <div ref={messagesEndRef} />
         </div>
 
-        {triageResult && !isTyping && (
-          <div className={`triage-result glass-card urgency-${triageResult.urgency.toLowerCase()}`}>
-            <div className="triage-header">
-              <h3>Diagnostic Summary</h3>
-              <span className="urgency-badge">
-                {triageResult.urgency}
-              </span>
-            </div>
-            
-            <div className="triage-content">
-              <div className="recommendation-section">
-                <span className="label">Recommendation:</span>
-                <p className="text">{triageResult.recommendation}</p>
-              </div>
-
-              {triageResult.urgency !== "SELF_CARE" && (
-                <button 
-                  className="btn-primary" 
-                  onClick={() => navigate("/dashboard/patient/book", { 
-                    state: { 
-                      triageData: {
-                        specialty: triageResult.specialty,
-                        urgency: triageResult.urgency,
-                        recommendation: triageResult.recommendation
-                      }
-                    } 
-                  })}
-                >
-                  Consult with {triageResult.specialty}
-                </button>
-              )}
-            </div>
+        <div className="chat-input-container">
+          <div className="chat-input glass-card">
+            <input
+              type="text"
+              placeholder="Describe symptoms to HealAssist AI…"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            />
+            <button onClick={handleSend} disabled={!input.trim() || isTyping}>
+              <FaPaperPlane />
+            </button>
           </div>
-        )}
-
-        <div className="chat-input glass-card">
-          <input
-            type="text"
-            placeholder="Describe symptoms to HealAssist AI…"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleSend()}
-          />
-          <button onClick={handleSend} disabled={!input.trim() || isTyping}>
-            <FaPaperPlane />
-          </button>
         </div>
       </div>
     </div>

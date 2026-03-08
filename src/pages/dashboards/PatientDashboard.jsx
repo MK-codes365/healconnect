@@ -6,15 +6,6 @@ import './PatientDashboard.css';
 
 const DASHBOARD_FEATURES = [
     {
-        id: 'ai-chat',
-        title: 'AI Health Assistant',
-        desc: 'Instant triage & symptoms check',
-        icon: FaRobot,
-        path: '/dashboard/patient/ai-chat',
-        color: '#3b82f6',
-        gradient: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)'
-    },
-    {
         id: 'rx',
         title: 'Prescriptions',
         desc: 'Manage & order your medicines',
@@ -75,6 +66,27 @@ const PatientDashboard = () => {
                     <h1>Good Day, <span className="gradient-text">{user.name.split(' ')[0]}</span></h1>
                     <p>What can we help you with today?</p>
                 </section>
+
+                {/* --- FEATURED AI CARD --- */}
+                <div className="ai-featured-card" onClick={() => navigate('/dashboard/patient/ai-chat')}>
+                    <div className="ai-card-content">
+                        <div className="ai-status">
+                            <span className="ai-pulse"></span>
+                            AWS Bedrock Engine Online
+                        </div>
+                        <h2>HealAssist AI Assistant</h2>
+                        <p>Get instant clinical triage, symptom analysis, and smart doctor recommendations powered by advanced medical AI.</p>
+                        <button className="start-chat-btn">
+                            Start Consultation <FaChevronRight size={14} />
+                        </button>
+                    </div>
+                    <div className="ai-icon-bg">
+                        <FaRobot />
+                    </div>
+                    {/* Animated Decorative Elements */}
+                    <div className="orb blue-orb"></div>
+                    <div className="orb purple-orb"></div>
+                </div>
 
                 <div className="feature-grid">
                     {DASHBOARD_FEATURES.map((item, index) => (

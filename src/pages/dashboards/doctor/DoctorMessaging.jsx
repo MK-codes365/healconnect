@@ -1,1 +1,96 @@
-import React, { useState } from 'react';import { useNavigate } from 'react-router-dom';import { FaArrowLeft, FaPaperPlane } from 'react-icons/fa';import './DoctorMessaging.css';const DoctorMessaging = () => {    const navigate = useNavigate();    const [selectedPatient, setSelectedPatient] = useState('P001');    const [message, setMessage] = useState('');    const [messages, setMessages] = useState({        P001: [            { sender: 'patient', text: 'Hello Doctor, I have a question about my prescription.', time: '10:30 AM' },            { sender: 'doctor', text: 'Of course! What would you like to know?', time: '10:35 AM' }        ],        P002: [            { sender: 'patient', text: 'When should I take the medication?', time: '11:00 AM' }        ]    });    const patients = [        { id: 'P001', name: 'Rajesh Kumar', unread: 0 },        { id: 'P002', name: 'Sunita Devi', unread: 1 }    ];    const handleSend = () => {        if (!message.trim()) return;        const newMessage = {            sender: 'doctor',            text: message,            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })        };        setMessages(prev => ({            ...prev,            [selectedPatient]: [...(prev[selectedPatient] || []), newMessage]        }));        setMessage('');    };    const currentMessages = messages[selectedPatient] || [];    const currentPatient = patients.find(p => p.id === selectedPatient);    return (        <div className="doctor-messaging-container">            <div className="messaging-header">                <button onClick={() => navigate('/dashboard/doctor')} className="back-btn">                    <FaArrowLeft /> Back                </button>                <h2>Patient Messages</h2>            </div>            <div className="messaging-layout">                <div className="patients-list">                    <h3>Patients</h3>                    {patients.map(patient => (                        <div                            key={patient.id}                            className={`patient-item ${selectedPatient === patient.id ? 'active' : ''}`}                            onClick={() => setSelectedPatient(patient.id)}                        >                            <div className="patient-avatar">{patient.name[0]}</div>                            <div className="patient-info">                                <p className="patient-name">{patient.name}</p>                                <p className="patient-id">{patient.id}</p>                            </div>                            {patient.unread > 0 && (                                <span className="unread-badge">{patient.unread}</span>                            )}                        </div>                    ))}                </div>                <div className="chat-area">                    <div className="chat-header">                        <h3>{currentPatient?.name}</h3>                    </div>                    <div className="messages-list">                        {currentMessages.map((msg, index) => (                            <div key={index} className={`message ${msg.sender}`}>                                <div className="message-content">                                    <p>{msg.text}</p>                                    <span className="message-time">{msg.time}</span>                                </div>                            </div>                        ))}                    </div>                    <div className="message-input">                        <input                            type="text"                            placeholder="Type your message..."                            value={message}                            onChange={(e) => setMessage(e.target.value)}                            onKeyPress={(e) => e.key === 'Enter' && handleSend()}                        />                        <button onClick={handleSend}>                            <FaPaperPlane />                        </button>                    </div>                </div>            </div>        </div>    );};export default DoctorMessaging;
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft, FaPaperPlane } from 'react-icons/fa';
+import './DoctorMessaging.css';
+const DoctorMessaging = () => {
+    const navigate = useNavigate();
+    const [selectedPatient, setSelectedPatient] = useState('P001');
+    const [message, setMessage] = useState('');
+    const [messages, setMessages] = useState({
+        P001: [
+            { sender: 'patient', text: 'Hello Doctor, I have a question about my prescription.', time: '10:30 AM' },
+            { sender: 'doctor', text: 'Of course! What would you like to know?', time: '10:35 AM' }
+        ],
+        P002: [
+            { sender: 'patient', text: 'When should I take the medication?', time: '11:00 AM' }
+        ]
+    });
+    const patients = [
+        { id: 'P001', name: 'Rajesh Kumar', unread: 0 },
+        { id: 'P002', name: 'Sunita Devi', unread: 1 }
+    ];
+    const handleSend = () => {
+        if (!message.trim()) return;
+        const newMessage = {
+            sender: 'doctor',
+            text: message,
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => ({
+            ...prev,
+            [selectedPatient]: [...(prev[selectedPatient] || []), newMessage]
+        }));
+        setMessage('');
+    };
+    const currentMessages = messages[selectedPatient] || [];
+    const currentPatient = patients.find(p => p.id === selectedPatient);
+    return (
+        <div className="doctor-messaging-container">
+            <div className="messaging-header">
+                <button onClick={() => navigate('/dashboard/doctor')} className="back-btn">
+                    <FaArrowLeft /> Back
+                </button>
+                <h2>Patient Messages</h2>
+            </div>
+            <div className="messaging-layout">
+                <div className="patients-list">
+                    <h3>Patients</h3>
+                    {patients.map(patient => (
+                        <div
+                            key={patient.id}
+                            className={`patient-item ${selectedPatient === patient.id ? 'active' : ''}`}
+                            onClick={() => setSelectedPatient(patient.id)}
+                        >
+                            <div className="patient-avatar">{patient.name[0]}</div>
+                            <div className="patient-info">
+                                <p className="patient-name">{patient.name}</p>
+                                <p className="patient-id">{patient.id}</p>
+                            </div>
+                            {patient.unread > 0 && (
+                                <span className="unread-badge">{patient.unread}</span>
+                            )}
+                        </div>
+                    ))}
+                </div>
+                <div className="chat-area">
+                    <div className="chat-header">
+                        <h3>{currentPatient?.name}</h3>
+                    </div>
+                    <div className="messages-list">
+                        {currentMessages.map((msg, index) => (
+                            <div key={index} className={`message ${msg.sender}`}>
+                                <div className="message-content">
+                                    <p>{msg.text}</p>
+                                    <span className="message-time">{msg.time}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="message-input">
+                        <input
+                            type="text"
+                            placeholder="Type your message..."
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                        />
+                        <button onClick={handleSend}>
+                            <FaPaperPlane />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+export default DoctorMessaging;

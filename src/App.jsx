@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -31,13 +31,27 @@ import PrescriptionCreator from './pages/dashboards/doctor/PrescriptionCreator';
 import PatientRegistration from './pages/dashboards/worker/PatientRegistration';
 import VitalsUpload from './pages/dashboards/worker/VitalsUpload';
 import MyCases from './pages/dashboards/worker/MyCases';
+import WorkerCaseDetail from './pages/dashboards/worker/WorkerCaseDetail';
 import WorkerMessaging from './pages/dashboards/worker/WorkerMessaging';
 import UserManagement from './pages/dashboards/admin/UserManagement';
 import Analytics from './pages/dashboards/admin/Analytics';
 import DoctorVerification from './pages/dashboards/admin/DoctorVerification';
-import AppointmentOversight from './pages/dashboards/admin/AppointmentOversight';
-import MessagingMonitor from './pages/dashboards/admin/MessagingMonitor';
+import EmergencyMonitor from './pages/dashboards/admin/EmergencyMonitor';
+import AuditLogs from './pages/dashboards/admin/AuditLogs';
 import PlatformSettings from './pages/dashboards/admin/PlatformSettings';
+
+const AppLayout = ({ children }) => {
+  const location = useLocation();
+  const isDashboard = location.pathname.startsWith('/dashboard');
+
+  return (
+    <>
+      {!isDashboard && <Navbar />}
+      {children}
+      {!isDashboard && <Footer />}
+    </>
+  );
+};
 
 function App() {
   React.useEffect(() => {
@@ -51,10 +65,10 @@ function App() {
         <NotificationProvider>
           <Router>
             <ScrollToTop />
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/login" element={<Login />} />
+            <AppLayout>
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/login" element={<Login />} />
               <Route path="/dashboard/patient" element={<PatientDashboard />} />
               <Route path="/dashboard/patient/ai-chat" element={<AIChat />} />
               <Route path="/dashboard/patient/doctors" element={<DoctorDirectory />} />
@@ -66,6 +80,7 @@ function App() {
               <Route path="/dashboard/worker/register-patient" element={<PatientRegistration />} />
               <Route path="/dashboard/worker/submit-case" element={<VitalsUpload />} />
               <Route path="/dashboard/worker/my-cases" element={<MyCases />} />
+              <Route path="/dashboard/worker/case/:id" element={<WorkerCaseDetail />} />
               <Route path="/dashboard/worker/messages" element={<WorkerMessaging />} />
               <Route path="/dashboard/doctor" element={<DoctorDashboard />} />
               <Route path="/dashboard/doctor/profile" element={<DoctorProfile />} />
@@ -78,15 +93,15 @@ function App() {
               <Route path="/dashboard/admin/users" element={<UserManagement />} />
               <Route path="/dashboard/admin/analytics" element={<Analytics />} />
               <Route path="/dashboard/admin/verification" element={<DoctorVerification />} />
-              <Route path="/dashboard/admin/appointments" element={<AppointmentOversight />} />
-              <Route path="/dashboard/admin/messaging" element={<MessagingMonitor />} />
+              <Route path="/dashboard/admin/emergency-monitor" element={<EmergencyMonitor />} />
+              <Route path="/dashboard/admin/audit-logs" element={<AuditLogs />} />
               <Route path="/dashboard/admin/settings" element={<PlatformSettings />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
-            </Routes>
-            <Footer />
+              </Routes>
+            </AppLayout>
           </Router>
         </NotificationProvider>
       </LanguageProvider>

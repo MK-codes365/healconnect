@@ -42,11 +42,11 @@ const CaseDetail = () => {
     if (!caseData) return <div className="error-state">Case not found in cloud registry.</div>;
 
     const handleStartConsultation = () => {
-        navigate(`/dashboard/doctor/consult/${patientId}`);
+        navigate(`/dashboard/doctor/consult/${encodeURIComponent(patientId)}`);
     };
 
     const handleCreatePrescription = () => {
-        navigate(`/dashboard/doctor/prescription/${patientId}`);
+        navigate(`/dashboard/doctor/prescription/${encodeURIComponent(patientId)}`);
     };
 
     return (

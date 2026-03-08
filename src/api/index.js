@@ -54,14 +54,14 @@ export const api = {
   },
 
   async getCasesByPatient(patientId) {
-    const response = await fetch(`${API_BASE_URL}/cases/patient/${patientId}`);
+    const response = await fetch(`${API_BASE_URL}/cases/patient/${encodeURIComponent(patientId)}`);
     if (!response.ok) throw new Error('Fetch Patient Cases Error');
     return response.json();
   },
 
   // --- Chat & Prescriptions ---
   async getChatSessions(patientId) {
-    const response = await fetch(`${API_BASE_URL}/chat/sessions/${patientId}`);
+    const response = await fetch(`${API_BASE_URL}/chat/sessions/${encodeURIComponent(patientId)}`);
     if (!response.ok) throw new Error('Fetch Sessions Error');
     return response.json();
   },
@@ -77,8 +77,122 @@ export const api = {
   },
 
   async getPrescriptions(patientId) {
-    const response = await fetch(`${API_BASE_URL}/prescriptions/${patientId}`);
+    const response = await fetch(`${API_BASE_URL}/prescriptions/${encodeURIComponent(patientId)}`);
     if (!response.ok) throw new Error('Fetch Prescriptions Error');
+    return response.json();
+  },
+
+  // --- Admin ---
+  async getPendingDoctors() {
+    const response = await fetch(`${API_BASE_URL}/admin/doctors/pending`);
+    if (!response.ok) throw new Error('Fetch Pending Doctors Error');
+    return response.json();
+  },
+
+  async verifyDoctor(doctorId, status) {
+    const response = await fetch(`${API_BASE_URL}/admin/doctors/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ doctorId, status }),
+    });
+    if (!response.ok) throw new Error('Verify Doctor Error');
+    return response.json();
+  },
+
+  async getAdminStats() {
+    const response = await fetch(`${API_BASE_URL}/admin/stats`);
+    if (!response.ok) throw new Error('Fetch Admin Stats Error');
+    return response.json();
+  },
+
+  async getEmergencyFeed() {
+    const response = await fetch(`${API_BASE_URL}/admin/emergency-feed`);
+    if (!response.ok) throw new Error('Fetch Emergency Feed Error');
+    return response.json();
+  },
+
+  async getAuditLogs() {
+    const response = await fetch(`${API_BASE_URL}/admin/logs`);
+    if (!response.ok) throw new Error('Fetch Audit Logs Error');
+    return response.json();
+  },
+
+  async getConfig() {
+    const response = await fetch(`${API_BASE_URL}/admin/config`);
+    if (!response.ok) throw new Error('Fetch Config Error');
+    return response.json();
+  },
+
+  async updateConfig(config) {
+    const response = await fetch(`${API_BASE_URL}/admin/config`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(config),
+    });
+    if (!response.ok) throw new Error('Update Config Error');
+    return response.json();
+  },
+
+  // --- Doctor Specific ---
+  async getActiveDoctors() {
+    const response = await fetch(`${API_BASE_URL}/doctors/active`);
+    if (!response.ok) throw new Error('Fetch Active Doctors Error');
+    return response.json();
+  },
+
+  async getAdminUsersAll() {
+    const response = await fetch(`${API_BASE_URL}/admin/users/all`);
+    if (!response.ok) throw new Error('Fetch All Users Error');
+    return response.json();
+  },
+
+  async getDoctorAppointments(doctorId) {
+    const response = await fetch(`${API_BASE_URL}/doctors/appointments/${encodeURIComponent(doctorId)}`);
+    if (!response.ok) throw new Error('Fetch Doctor Appointments Error');
+    return response.json();
+  },
+
+  async createUser(userData) {
+    const response = await fetch(`${API_BASE_URL}/admin/users/create`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData),
+    });
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to create user');
+    }
+    return response.json();
+  },
+
+  async updateUser(userData) {
+    const response = await fetch(`${API_BASE_URL}/admin/users/update`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userData),
+    });
+    if (!response.ok) throw new Error('Update User Error');
+    return response.json();
+  },
+
+  async toggleUserStatus(userId, currentStatus) {
+    const response = await fetch(`${API_BASE_URL}/admin/users/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, currentStatus }),
+    });
+    if (!response.ok) throw new Error('Toggle Status Error');
+    return response.json();
+  },
+
+  async deleteUser(userId) {
+    const response = await fetch(`${API_BASE_URL}/admin/users/delete/${encodeURIComponent(userId)}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.error || 'Delete User Error');
+    }
     return response.json();
   }
 };

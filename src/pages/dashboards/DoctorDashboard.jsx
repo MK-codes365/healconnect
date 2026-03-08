@@ -121,7 +121,7 @@ const DoctorDashboard = () => {
                                 <div 
                                     key={caseItem.sk} 
                                     className={`case-card glass-card urgency-${caseItem.urgency?.toLowerCase()}`}
-                                    onClick={() => navigate(`/dashboard/doctor/case/${caseItem.patientId}`)}
+                                    onClick={() => navigate(`/dashboard/doctor/case/${encodeURIComponent(caseItem.patientId)}`)}
                                 >
                                     <div className="case-header">
                                         <div className="urgency-indicator">
