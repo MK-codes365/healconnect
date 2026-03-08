@@ -645,7 +645,7 @@ MIT License © 2026 Heal Connect
 
 ### ⭐ If you find this helpful, please star the repository!
 
-**Made with ❤️ by the Heal Connect Team**
+**Made with ❤️ by the CodeX5 Team**
 
 [⬆ Back to Top](#-heal-connect)
 
